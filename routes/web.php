@@ -22,6 +22,9 @@ Route::get('/dashboard', function () {
 Route::get('/sample', function () {
     return view('sample_page');
 });
+Route::get('/students', function () {
+    return view('students_page');
+});
 
 Auth::routes();
 
