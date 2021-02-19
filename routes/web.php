@@ -22,9 +22,29 @@ Route::get('/dashboard', function () {
 Route::get('/sample', function () {
     return view('sample_page');
 });
+
+// ALINE
+Route::get('/regstudent', function () {
+    return view('registerstudent_page');
+});
+Route::get('/regstaff', function () {
+    return view('registerstaff_page');
+});
 Route::get('/students', function () {
     return view('students_page');
 });
+Route::get('/userprofile', function () {
+    return view('userprofile_page');
+});
+Route::get('/security', function () {
+    return view('usersecurity_page');
+});
+Route::get('/notifications', function () {
+    return view('usernotifications_page');
+});
+
+
+
 
 Auth::routes();
 
