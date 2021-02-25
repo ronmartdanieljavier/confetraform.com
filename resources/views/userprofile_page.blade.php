@@ -85,10 +85,16 @@
                                         </div>
                                         <!-- Form Row        -->
                                         <div class="form-row">
-                                            <!-- Form Group (university name)-->
+                                            <!-- Form Group (course name)-->
                                             <div class="form-group col-md-6">
-                                                <label class="small mb-1" for="inputOrgName">University name</label>
-                                                <input class="form-control" id="inputOrgName" type="text" placeholder="Enter your University name" value="" />
+                                                <label class="small mb-1" for="inputCourse">Course name</label>
+                                                <select id="inputCourse" class="form-control">
+                                                    <option selected>Choose...</option>
+                                                    @foreach($var_for_dropdown as $row_data)
+                                                    <option value="{{ $row_data['course_id'] }}">{{ $row_data['course_name']}}</option>
+                                                    @endforeach
+                                                </select>
+
                                             </div>
                                             <!-- Form Group (location)-->
                                             <div class="form-group col-md-6">

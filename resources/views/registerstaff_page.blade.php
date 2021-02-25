@@ -13,16 +13,6 @@
     <script data-search-pseudo-elements="" defer="" src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" crossorigin="anonymous"></script>
     <script src="/sass.js"></script>
-
-    <style type="text/css">
-.dropdown
-    button#dropdownFadeIn.btn.btn-secondary.dropdown-toggle(type='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
-        | Fade In
-.dropdown-menu.animated--fade-in(aria-labelledby='dropdownFadeIn')
-    a.dropdown-item(href='#!') Action
-    a.dropdown-item(href='#!') Another action
-    a.dropdown-item(href='#!') Something else here
-    </style>
 </head>
 
 <body class="bg-primary">
@@ -47,20 +37,17 @@
                                 <form>
                                     <div class="card-body p-4">
                                         <div class="form-group">
-                                            <h5 class="font-weight-500 mb-3">University / College</h5>
 
-                                            <!-- Fade In Animation -->
-                                            <div class="dropdown">
-                                                <button class="btn btn-block btn-light dropdown-toggle" id="dropdownFadeIn" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Please select a University / College</button>
-                                                <div class="dropdown-menu animated--fade-in" aria-labelledby="dropdownFadeIn">
-                                                    <a class="dropdown-item" href="#!">Action</a>
-                                                    <a class="dropdown-item" href="#!">Another action</a>
-                                                    <a class="dropdown-item" href="#!">Something else here</a>
-                                                </div>
-                                            </div>
+                                            <h5 class="font-weight-500 mb-3"><label for="inputUni">University / College</label></h5>
+                                            <select id="inputUni" class="form-control">
+                                                <option selected>Choose...</option>
+                                                @foreach($var_for_dropdown as $row_data)
+                                                <option value="{{ $row_data['university_id'] }}">{{ $row_data['university_name']}}</option>
+                                                @endforeach
+                                            </select>
 
                                         </div>
-                                        <a class="btn btn-block btn-secondary" href="dashboard">Register new staff</a>
+                                        <a class="btn btn-block btn-secondary" href="dashboard">Complete Registration</a>
                                     </div>
                                 </form>
                             </div>

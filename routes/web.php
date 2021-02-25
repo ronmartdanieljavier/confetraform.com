@@ -27,18 +27,19 @@ Route::get('/sample', function () {
 Route::get('/regstudent', function () {
     return view('registerstudent_page');
 });
-Route::get('/regstaff', function () {
-    return view('registerstaff_page');
-});
+
+Route::get('/regstaff', "RegisterController@loadRegisterPage");
+
 Route::get('/students', function () {
     return view('students_page');
 });
-Route::get('/userprofile', function () {
-    return view('userprofile_page');
-});
+
+Route::get('/userprofile', "UserProfileController@loadUserProfilePage");
+
 Route::get('/security', function () {
     return view('usersecurity_page');
 });
+
 Route::get('/notifications', function () {
     return view('usernotifications_page');
 });

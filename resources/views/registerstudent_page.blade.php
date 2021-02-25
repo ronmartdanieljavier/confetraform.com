@@ -48,7 +48,7 @@
                                                 <input class="form-control form-control-solid" type="text" placeholder="Enter referral code" aria-label="Referral Code" aria-describedby="referralCode">
                                             </div></div>
                                         </div>
-                                        <a class="btn btn-block btn-primary" href="dashboard">Register new student</a>
+                                        <a class="btn btn-block btn-primary" href="dashboard">Complete Registration</a>
                                     </div>
                                 </form>
                             </div>
