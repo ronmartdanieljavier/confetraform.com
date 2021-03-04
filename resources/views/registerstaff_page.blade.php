@@ -41,7 +41,7 @@
                                             <h5 class="font-weight-500 mb-3"><label for="inputUni">University / College</label></h5>
                                             <select id="inputUni" class="form-control">
                                                 <option selected>Choose...</option>
-                                                @foreach($var_for_dropdown as $row_data)
+                                                @foreach($var_for_unilist as $row_data)
                                                 <option value="{{ $row_data['university_id'] }}">{{ $row_data['university_name']}}</option>
                                                 @endforeach
                                             </select>

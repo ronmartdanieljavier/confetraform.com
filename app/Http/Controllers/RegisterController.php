@@ -8,10 +8,8 @@ use Illuminate\Support\Facades\DB;
 class RegisterController extends Controller
 {
     //
-    public function loadRegisterPage(Request $request)
+    public function loadRegisterPage()
     {
-        $user_id = $request->input("id");
-
         //$university_data = DB::select('select * from universities');
         $university_data = DB::table("universities")
             ->get();
@@ -23,17 +21,9 @@ class RegisterController extends Controller
                 "university_name" => $row_data->university_name
             ];
         }
-
         //var_dump($university_data);
         //dd($university_data);
 
-        $user_data = DB::table("users");
-        if($user_id) {
-            $user_data = $user_data->where("id", $user_id);
-        }
-        $user_data = $user_data->get();
-        //dd($user_data);
-
-        return view('registerstaff_page', ["var_for_dropdown" => $university_list]);
+        return view('registerstaff_page', ["var_for_unilist" => $university_list]);
     }
 }

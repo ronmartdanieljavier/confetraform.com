@@ -65,22 +65,24 @@
                                 <div class="card-header">Account Details</div>
                                 <div class="card-body">
                                     <form>
-                                        <!-- Form Group (username)-->
+                                        @foreach($var_for_user as $row_data)
+                                        <!-- Form Group (usernumber)-->
                                         <div class="form-group">
-                                            <label class="small mb-1" for="inputUsername">Username (how your name will appear to other users on the site)</label>
-                                            <input class="form-control" id="inputUsername" type="text" placeholder="Enter your username" value="" />
+                                            <label class="small mb-1" for="inputUsernumber">Student / Staff Number</label>
+
+                                            <input class="form-control" id="inputUsernumber" type="text" placeholder="" value="{{ $row_data['user_number'] }}" />
                                         </div>
                                         <!-- Form Row-->
                                         <div class="form-row">
                                             <!-- Form Group (first name)-->
                                             <div class="form-group col-md-6">
                                                 <label class="small mb-1" for="inputFirstName">First name</label>
-                                                <input class="form-control" id="inputFirstName" type="text" placeholder="Enter your first name" value="" />
+                                                <input class="form-control" id="inputFirstName" type="text" placeholder="" value="{{ $row_data['user_first_name'] }}" />
                                             </div>
                                             <!-- Form Group (last name)-->
                                             <div class="form-group col-md-6">
                                                 <label class="small mb-1" for="inputLastName">Last name</label>
-                                                <input class="form-control" id="inputLastName" type="text" placeholder="Enter your last name" value="" />
+                                                <input class="form-control" id="inputLastName" type="text" placeholder="" value="{{ $row_data['user_last_name'] }}" />
                                             </div>
                                         </div>
                                         <!-- Form Row        -->
@@ -89,39 +91,38 @@
                                             <div class="form-group col-md-6">
                                                 <label class="small mb-1" for="inputCourse">Course name</label>
                                                 <select id="inputCourse" class="form-control">
-                                                    <option selected>Choose...</option>
-                                                    @foreach($var_for_dropdown as $row_data)
-                                                    <option value="{{ $row_data['course_id'] }}">{{ $row_data['course_name']}}</option>
+                                                    @foreach($var_for_course as $row_data2)
+                                                    <option value="{{ $row_data2['course_id'] }}">{{ $row_data2['course_name'] }}</option>
                                                     @endforeach
                                                 </select>
-
                                             </div>
-                                            <!-- Form Group (location)-->
+                                            <!-- Form Group (address)-->
                                             <div class="form-group col-md-6">
-                                                <label class="small mb-1" for="inputLocation">Location</label>
-                                                <input class="form-control" id="inputLocation" type="text" placeholder="Enter your location" value="" />
+                                                <label class="small mb-1" for="inputAddress">Address</label>
+                                                <input class="form-control" id="inputAddress" type="text" placeholder="" value="{{ $row_data['user_address'] }}" />
                                             </div>
                                         </div>
                                         <!-- Form Group (email address)-->
                                         <div class="form-group">
                                             <label class="small mb-1" for="inputEmailAddress">Email address</label>
-                                            <input class="form-control" id="inputEmailAddress" type="email" placeholder="Enter your email address" value="" />
+                                            <input class="form-control" id="inputEmailAddress" type="email" placeholder="" value="{{ $row_data['user_email'] }}" />
                                         </div>
                                         <!-- Form Row-->
                                         <div class="form-row">
                                             <!-- Form Group (phone number)-->
                                             <div class="form-group col-md-6">
                                                 <label class="small mb-1" for="inputPhone">Phone number</label>
-                                                <input class="form-control" id="inputPhone" type="tel" placeholder="Enter your phone number" value="" />
+                                                <input class="form-control" id="inputPhone" type="tel" placeholder="" value="{{ $row_data['user_phone_number'] }}" />
                                             </div>
                                             <!-- Form Group (birthday)-->
                                             <div class="form-group col-md-6">
-                                                <label class="small mb-1" for="inputBirthday">Birthday</label>
-                                                <input class="form-control" id="inputBirthday" type="text" name="birthday" placeholder="Enter your birthday" value="" />
+                                                <label class="small mb-1" for="inputBirthdate">Birthday</label>
+                                                <input class="form-control" id="inputBirthdate" type="text" name="birthdate" placeholder="" value="{{ $row_data['user_dob'] }}" />
                                             </div>
                                         </div>
                                         <!-- Save changes button-->
                                         <button class="btn btn-primary" type="button">Save changes</button>
+                                    @endforeach
                                     </form>
                                 </div>
                             </div>
