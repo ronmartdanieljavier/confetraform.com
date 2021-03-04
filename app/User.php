@@ -16,7 +16,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'first_name','last_name', 'email', 'password', 'university_id', 'user_type_id', 'status'
+        'first_name','last_name', 'email', 'password', 'university_id', 'user_type_id', 'status', 'email_verified_at'
     ];
 
     /**
@@ -37,11 +37,10 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
-    public function loadUserAccountListByUserType($user_type_id)
+    public function loadUserAccountListByUserType($university_id = null, $user_type_id = null)
     {
-        return $this->leftjoin("user_types", "user_types.id", "=", "user_type_id")
+        $data_set = $this->leftjoin("user_types", "user_types.id", "=", "user_type_id")
             ->leftjoin("universities", "universities.id", "=", "university_id")
-            ->where("user_type_id", $user_type_id)
             ->select(
                 "users.id AS user_id",
                 "first_name AS first_name",
@@ -62,8 +61,14 @@ class User extends Authenticatable implements MustVerifyEmail
                 "universities.university_branch AS university_branch",
                 "users.status AS status",
                 "email_verified_at AS email_verified_at"
-            )
-//            ->orderBy("users.id","DESC")
-            ->get();
+            );
+        if($university_id){
+            $data_set = $data_set->where("university_id", $university_id);
+        }
+        if($user_type_id){
+            $data_set = $data_set->where("user_type_id", $user_type_id);
+        }
+        $data_set = $data_set->get();
+        return $data_set;
     }
 }

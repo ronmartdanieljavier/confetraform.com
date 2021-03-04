@@ -20,6 +20,7 @@
     <link href="{{ asset('vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
 </head>
 <body id="page-top">
+
 <!-- Page Wrapper -->
 <div id="wrapper">
 
@@ -311,9 +312,12 @@
 
             <!-- Begin Page Content -->
             <div class="container-fluid">
-
+                @if(!auth()->user()->email_verified_at)
+                    <div class="alert alert-danger" role="alert">
+                        Your account is not verified yet. <a href="#" class="alert-link">RESEND</a> verification email.
+                    </div>
+                @endif
                 @yield('content')
-
             </div>
             <!-- /.container-fluid -->
 
