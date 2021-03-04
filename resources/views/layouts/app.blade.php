@@ -312,11 +312,19 @@
 
             <!-- Begin Page Content -->
             <div class="container-fluid">
-                @if(!auth()->user()->email_verified_at)
-                    <div class="alert alert-danger" role="alert">
-                        Your account is not verified yet. <a href="#" class="alert-link">RESEND</a> verification email.
-                    </div>
+                @if(auth()->check())
+                    @if(!auth()->user()->email_verified_at)
+                        <form class="d-inline" method="POST" action="{{ route('verification.resend') }}">
+                            @csrf
+                            <div class="alert alert-danger" role="alert">
+                                Your account is not verified yet. <button type="submit" class="btn btn-link p-0 m-0 align-baseline">{{ __('click here to request another') }}</button>.
+                            </div>
+                            .
+                        </form>
+
+                    @endif
                 @endif
+
                 @yield('content')
             </div>
             <!-- /.container-fluid -->
@@ -359,7 +367,7 @@
             <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
             <div class="modal-footer">
                 <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                <a class="btn btn-primary" href="login.html">Logout</a>
+                <a class="btn btn-primary" href="{{ url('/logout') }}">Logout</a>
             </div>
         </div>
     </div>
