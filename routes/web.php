@@ -16,13 +16,16 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/dashboard', function () {
-    return view('dashboard_page');
-});
+
 Route::get('/sample', function () {
     return view('sample_page');
 });
 
+Auth::routes(['verify' => true]);
+
+Route::get('/home', function () {
+    return view('dashboard_page');
+});
 // ALINE
 Route::get('/regstudent', function () {
     return view('registerstudent_page');
@@ -43,9 +46,8 @@ Route::get('/notifications', function () {
     return view('usernotifications_page');
 });
 
-
-
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/sys-admins', "SystemAdminController@loadSysAdminPage");
+Route::get('/uni-admins', "SystemAdminController@loadUniAdminPage");
+Route::get('/uni-approvers', "UniversityAdminController@loadApproverPage");
+Route::get('/uni-reviewers', "UniversityAdminController@loadReviewerPage");
+Route::get('/uni-applicants', "UniversityAdminController@loadApplicantPage");

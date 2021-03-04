@@ -17,6 +17,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/sb-admin-2.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
 </head>
 <body id="page-top">
 <!-- Page Wrapper -->
@@ -38,7 +39,7 @@
 
         <!-- Nav Item - Dashboard -->
         <li class="nav-item active">
-            <a class="nav-link" href="{!! URL::to('/dashboard') !!}">
+            <a class="nav-link" href="{!! URL::to('/home') !!}">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>Dashboard</span></a>
         </li>
@@ -55,6 +56,25 @@
             <a class="nav-link" href="{!! URL::to('/forms') !!}">
                 <i class="fas fa-file-alt"></i>
                 <span>Forms</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
+               aria-expanded="true" aria-controls="collapsePages">
+                <i class="fas fa-users"></i>
+                <span>User Accounts</span>
+            </a>
+            <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Administrators:</h6>
+                    <a class="collapse-item" href="{!! URL::to('/sys-admins') !!}">System Administrator</a>
+                    <a class="collapse-item" href="{!! URL::to('/uni-admins') !!}">University Administrator</a>
+                    <div class="collapse-divider"></div>
+                    <h6 class="collapse-header">University Users:</h6>
+                    <a class="collapse-item" href="{!! URL::to('/uni-approvers') !!}">Approvers</a>
+                    <a class="collapse-item" href="{!! URL::to('/uni-reviewers') !!}">Reviewers</a>
+                    <a class="collapse-item" href="{!! URL::to('/uni-applicants') !!}">Applicants</a>
+                </div>
+            </div>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="{!! URL::to('/students') !!}">
@@ -363,5 +383,14 @@
 <!-- Page level custom scripts -->
 <script src="{{ asset('js/demo/chart-area-demo.js') }}"></script>
 <script src="{{ asset('js/demo/chart-pie-demo.js') }}"></script>
+<script src="{{ asset('vendor/datatables/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
+
+<script>
+    // Call the dataTables jQuery plugin
+    $(document).ready(function() {
+        $('#dataTable').DataTable();
+    });
+</script>
 </body>
 </html>

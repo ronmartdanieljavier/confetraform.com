@@ -19,7 +19,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr><td>Ivey</td><td>Colgan</td><td>15/06/2020</td><td><span class="badge badge-light">Inactive</span></td></tr>
+                                            <tr><td>Ivey</td><td>Colgan</td><td>15/06/2020</td><td><span class="badge badge-danger">Inactive</span></td></tr>
                                             <tr><td>Graig</td><td>Nailor</td><td>15/05/2020</td><td><span class="badge badge-success">Active</span></td></tr>
                                             <tr><td>Simon</td><td>Gaertner</td><td>17/07/2020</td><td><span class="badge badge-success">Active</span></td></tr>
                                             <tr><td>Valda</td><td>Brun</td><td>19/09/2019</td><td><span class="badge badge-success">Active</span></td></tr>
