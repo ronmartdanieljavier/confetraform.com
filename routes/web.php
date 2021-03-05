@@ -44,8 +44,6 @@ Route::get('/security', function () {
     return view('usersecurity_page');
 });
 
-
-})->middleware('auth');
 Route::get('/regstaff', function () {
     return view('registerstaff_page');
 })->middleware('auth');
