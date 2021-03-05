@@ -4,10 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
 class UserProfileController extends Controller
 {
-    //
+    
     public function loadUserProfilePage(Request $request)
     {
         $user_id = $request->input("id");

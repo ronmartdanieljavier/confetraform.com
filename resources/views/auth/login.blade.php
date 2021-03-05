@@ -27,28 +27,51 @@
                                 <div class="card-header justify-content-center"><h3 class="font-weight-light my-4">Login</h3></div>
                                 <div class="card-body">
                                     <!-- Login form-->
-                                    <form>
+                                    <form method="POST" action="{{ route('login') }}">
+                                        @csrf
                                         <!-- Form Group (email address)-->
                                         <div class="form-group">
-                                            <label class="small mb-1" for="inputEmailAddress">Email</label>
-                                            <input class="form-control" id="inputEmailAddress" type="email" placeholder="Enter email address">
+                                            <label class="small mb-1" for="email">Email</label>
+                                            <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+
+                                            @error('email')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                            @enderror
                                         </div>
                                         <!-- Form Group (password)-->
                                         <div class="form-group">
-                                            <label class="small mb-1" for="inputPassword">Password</label>
-                                            <input class="form-control" id="inputPassword" type="password" placeholder="Enter password">
+                                            <label class="small mb-1" for="password">Password</label>
+                                            <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+
+                                            @error('password')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                            @enderror
                                         </div>
                                         <!-- Form Group (remember password checkbox)-->
                                         <div class="form-group">
                                             <div class="custom-control custom-checkbox">
-                                                <input class="custom-control-input" id="rememberPasswordCheck" type="checkbox">
-                                                <label class="custom-control-label" for="rememberPasswordCheck">Remember password</label>
+                                                <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
+
+                                                <label class="form-check-label" for="remember">
+                                                    {{ __('Remember Me') }}
+                                                </label>
                                             </div>
                                         </div>
                                         <!-- Form Group (login box)-->
                                         <div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0">
-                                            <a class="small" href="{{ route('password.request') }}">Forgot Password?</a>
-                                            <a class="btn btn-primary" href="dashboard">Login</a>
+                                            <button type="submit" class="btn btn-primary">
+                                                {{ __('Login') }}
+                                            </button>
+
+                                            @if (Route::has('password.request'))
+                                                <a class="btn btn-link small" href="{{ route('password.request') }}">
+                                                    {{ __('Forgot Your Password?') }}
+                                                </a>
+                                            @endif
                                         </div>
                                     </form>
                                 </div>
