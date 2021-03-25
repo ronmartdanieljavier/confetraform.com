@@ -15,8 +15,7 @@ class CreateFormDetailsTable extends Migration
     {
         Schema::create('form_details', function (Blueprint $table) {
             $table->id();
-            $table->integer("form_id");
-            $table->string("field_section");
+            $table->integer("form_section_id");
             $table->string("field_name");
             $table->string("field_label");
             $table->string("field_type");

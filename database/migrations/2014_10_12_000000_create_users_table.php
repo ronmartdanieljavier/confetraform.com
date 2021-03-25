@@ -28,6 +28,7 @@ class CreateUsersTable extends Migration
             $table->string("post_code", 10)->nullable();
             $table->string("country")->nullable();
             $table->integer("user_type_id");
+            $table->integer("course_id");
             $table->integer("university_id");
             $table->boolean("status")->default(true);
             $table->timestamp('email_verified_at')->nullable();

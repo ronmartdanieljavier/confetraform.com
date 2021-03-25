@@ -60,14 +60,7 @@
                                         </span>
                                     <span class="text">View</span>
                                 </a>
-                                @if(!$row_data->email_verified_at)
-                                    <a href="#" class="btn btn-secondary btn-icon-split btn-sm">
-                                    <span class="icon text-white-50">
-                                            <i class="fas fa-envelope"></i>
-                                        </span>
-                                        <span class="text">Resend Verification</span>
-                                    </a>
-                                @endif
+
 
                                 @if($row_data->status == 1)
                                     <a href="#" class="btn btn-danger btn-sm">

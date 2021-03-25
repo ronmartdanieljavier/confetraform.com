@@ -22,7 +22,8 @@ class UserSeeder extends Seeder
             'state' => "NSW",
             'post_code' => "2115",
             'country' => "AU",
-            'user_type_id' => "1",
+            'user_type_id' => "2",
+            'course_id' => "1",
             'university_id' => "1",
             'email' => 'ronmartdanieljavier@gmail.com',
             'password' => Hash::make('passwordRon'),
@@ -40,7 +41,8 @@ class UserSeeder extends Seeder
             'state' => "NSW",
             'post_code' => "2115",
             'country' => "AU",
-            'user_type_id' => "1",
+            'user_type_id' => "2",
+            'course_id' => "1",
             'university_id' => "1",
             'email' => 'aline.prdg@gmail.com',
             'password' => Hash::make('passwordAline'),
@@ -48,7 +50,7 @@ class UserSeeder extends Seeder
         ]);
 
 
-        for($x=1; $x<=100; $x++) {
+        for($x=1; $x<=10; $x++) {
             $status = $x % 2 == 0 ? 1: 0;
             DB::table('users')->insert([
                 'first_name' => "SysAdmin ".$x,
@@ -61,6 +63,7 @@ class UserSeeder extends Seeder
                 'state' => "",
                 'post_code' => "",
                 'country' => "",
+                'course_id' => "1",
                 'user_type_id' => "1",
                 'university_id' => "1",
                 'status' => $status,
@@ -69,7 +72,7 @@ class UserSeeder extends Seeder
             ]);
         }
 
-        for($x=1; $x<=100; $x++) {
+        for($x=1; $x<=10; $x++) {
             $status = $x % 2 == 0 ? 1: 0;
             DB::table('users')->insert([
                 'first_name' => "UniAdmin ".$x,
@@ -83,13 +86,14 @@ class UserSeeder extends Seeder
                 'post_code' => "",
                 'country' => "",
                 'user_type_id' => "2",
+                'course_id' => "1",
                 'university_id' => "1",
                 'status' => $status,
                 'email' => 'UniAdmin'.$x.'@gmail.com',
                 'password' => Hash::make('UniAdmin'.$x),
             ]);
         }
-        for($x=1; $x<=100; $x++) {
+        for($x=1; $x<=10; $x++) {
             $status = $x % 2 == 0 ? 1: 0;
             DB::table('users')->insert([
                 'first_name' => "Approver ".$x,
@@ -103,33 +107,14 @@ class UserSeeder extends Seeder
                 'post_code' => "",
                 'country' => "",
                 'user_type_id' => "3",
+                'course_id' => "1",
                 'university_id' => "1",
                 'status' => $status,
                 'email' => 'Approver'.$x.'@gmail.com',
                 'password' => Hash::make('Approver'.$x),
             ]);
         }
-        for($x=1; $x<=100; $x++) {
-            $status = $x % 2 == 0 ? 1: 0;
-            DB::table('users')->insert([
-                'first_name' => "Reviewer ".$x,
-                'last_name' => "Dummy ".$x,
-                'date_of_birth' => "1991/06/22",
-                'student_number' => "",
-                'contact_number' => "",
-                'street' => "",
-                'suburb' => "",
-                'state' => "",
-                'post_code' => "",
-                'country' => "",
-                'user_type_id' => "4",
-                'university_id' => "1",
-                'status' => $status,
-                'email' => 'Reviewer'.$x.'@gmail.com',
-                'password' => Hash::make('Reviewer'.$x),
-            ]);
-        }
-        for($x=1; $x<=100; $x++) {
+        for($x=1; $x<=10; $x++) {
             $status = $x % 2 == 0 ? 1: 0;
             DB::table('users')->insert([
                 'first_name' => "Applicant ".$x,
@@ -142,7 +127,8 @@ class UserSeeder extends Seeder
                 'state' => "",
                 'post_code' => "",
                 'country' => "",
-                'user_type_id' => "5",
+                'user_type_id' => "4",
+                'course_id' => "1",
                 'university_id' => "1",
                 'status' => $status,
                 'email' => 'Applicant'.$x.'@gmail.com',

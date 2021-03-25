@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUniversitiesTable extends Migration
+class CreateFormSection extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,11 @@ class CreateUniversitiesTable extends Migration
      */
     public function up()
     {
-        Schema::create('universities', function (Blueprint $table) {
+        Schema::create('form_section', function (Blueprint $table) {
             $table->id();
-            $table->string("university_name");
-            $table->string("university_branch");
-            $table->decimal( "university_budget",16, 2);
-            $table->string("university_code")->unique();
-            $table->boolean("status")->default(true);
+            $table->integer("form_id");
+            $table->string("form_section");
+            $table->string("form_section_order");
             $table->timestamps();
         });
     }
@@ -31,6 +29,6 @@ class CreateUniversitiesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('universities');
+        Schema::dropIfExists('form_section');
     }
 }

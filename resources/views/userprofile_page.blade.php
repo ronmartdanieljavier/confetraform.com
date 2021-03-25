@@ -37,52 +37,45 @@
                 </header>
                 <!-- Main page content-->
                 <div class="container mt-4">
-                    <!-- Account page navigation-->
-                    <nav class="nav nav-borders">
-                        <a class="nav-link active ml-0" href="userprofile">Profile</a>
-                        <a class="nav-link" href="security">Security</a>
-                        <a class="nav-link" href="notifications">Notifications</a>
-                    </nav>
-                    <hr class="mt-0 mb-4" />
+
                     <div class="row">
-                        <div class="col-xl-4">
-                            <!-- Profile picture card-->
-                            <div class="card">
-                                <div class="card-header">Profile Picture</div>
-                                <div class="card-body text-center">
-                                    <!-- Profile picture image-->
-                                    <img class="img-account-profile rounded-circle mb-2" src="../public/img/profile-1.png" alt />
-                                    <!-- Profile picture help block-->
-                                    <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
-                                    <!-- Profile picture upload button-->
-                                    <button class="btn btn-primary" type="button">Upload new image</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-8">
+{{--                        <div class="col-xl-4">--}}
+{{--                            <!-- Profile picture card-->--}}
+{{--                            <div class="card">--}}
+{{--                                <div class="card-header">Profile Picture</div>--}}
+{{--                                <div class="card-body text-center">--}}
+{{--                                    <!-- Profile picture image-->--}}
+{{--                                    <img class="img-account-profile rounded-circle mb-2" src="../public/img/profile-1.png" alt />--}}
+{{--                                    <!-- Profile picture help block-->--}}
+{{--                                    <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>--}}
+{{--                                    <!-- Profile picture upload button-->--}}
+{{--                                    <button class="btn btn-primary" type="button">Upload new image</button>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+                        <div class="col-xl-12">
                             <!-- Account details card-->
                             <div class="card mb-4">
                                 <div class="card-header">Account Details</div>
                                 <div class="card-body">
                                     <form>
-                                        @foreach($var_for_user as $row_data)
                                         <!-- Form Group (usernumber)-->
                                         <div class="form-group">
                                             <label class="small mb-1" for="inputUsernumber">Student / Staff Number</label>
 
-                                            <input class="form-control" id="inputUsernumber" type="text" placeholder="" value="{{ $row_data['user_number'] }}" />
+                                            <input class="form-control" id="inputUsernumber" type="text" placeholder="" value="{{ $var_for_user['student_number'] }}" />
                                         </div>
                                         <!-- Form Row-->
                                         <div class="form-row">
                                             <!-- Form Group (first name)-->
                                             <div class="form-group col-md-6">
                                                 <label class="small mb-1" for="inputFirstName">First name</label>
-                                                <input class="form-control" id="inputFirstName" type="text" placeholder="" value="{{ $row_data['user_first_name'] }}" />
+                                                <input class="form-control" id="inputFirstName" type="text" placeholder="" value="{{ $var_for_user['first_name'] }}" />
                                             </div>
                                             <!-- Form Group (last name)-->
                                             <div class="form-group col-md-6">
                                                 <label class="small mb-1" for="inputLastName">Last name</label>
-                                                <input class="form-control" id="inputLastName" type="text" placeholder="" value="{{ $row_data['user_last_name'] }}" />
+                                                <input class="form-control" id="inputLastName" type="text" placeholder="" value="{{ $var_for_user['last_name'] }}" />
                                             </div>
                                         </div>
                                         <!-- Form Row        -->
@@ -92,37 +85,36 @@
                                                 <label class="small mb-1" for="inputCourse">Course name</label>
                                                 <select id="inputCourse" class="form-control">
                                                     @foreach($var_for_course as $row_data2)
-                                                    <option value="{{ $row_data2['course_id'] }}">{{ $row_data2['course_name'] }}</option>
+                                                        <option value="{{ $row_data2['course_id'] }}">{{ $row_data2['course_name'] }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
                                             <!-- Form Group (address)-->
                                             <div class="form-group col-md-6">
                                                 <label class="small mb-1" for="inputAddress">Address</label>
-                                                <input class="form-control" id="inputAddress" type="text" placeholder="" value="{{ $row_data['user_address'] }}" />
+                                                <input class="form-control" id="inputAddress" type="text" placeholder="" value="{{ $var_for_user['street'] }}" />
                                             </div>
                                         </div>
                                         <!-- Form Group (email address)-->
                                         <div class="form-group">
                                             <label class="small mb-1" for="inputEmailAddress">Email address</label>
-                                            <input class="form-control" id="inputEmailAddress" type="email" placeholder="" value="{{ $row_data['user_email'] }}" />
+                                            <input class="form-control" id="inputEmailAddress" type="email" placeholder="" value="{{ $var_for_user['email'] }}" />
                                         </div>
                                         <!-- Form Row-->
                                         <div class="form-row">
                                             <!-- Form Group (phone number)-->
                                             <div class="form-group col-md-6">
                                                 <label class="small mb-1" for="inputPhone">Phone number</label>
-                                                <input class="form-control" id="inputPhone" type="tel" placeholder="" value="{{ $row_data['user_phone_number'] }}" />
+                                                <input class="form-control" id="inputPhone" type="tel" placeholder="" value="{{ $var_for_user['contact_number'] }}" />
                                             </div>
                                             <!-- Form Group (birthday)-->
                                             <div class="form-group col-md-6">
                                                 <label class="small mb-1" for="inputBirthdate">Birthday</label>
-                                                <input class="form-control" id="inputBirthdate" type="text" name="birthdate" placeholder="" value="{{ $row_data['user_dob'] }}" />
+                                                <input class="form-control" id="inputBirthdate" type="text" name="birthdate" placeholder="" value="{{ $var_for_user['date_of_birth'] }}" />
                                             </div>
                                         </div>
                                         <!-- Save changes button-->
                                         <button class="btn btn-primary" type="button">Save changes</button>
-                                    @endforeach
                                     </form>
                                 </div>
                             </div>

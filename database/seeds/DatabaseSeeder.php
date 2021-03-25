@@ -20,6 +20,8 @@ class DatabaseSeeder extends Seeder
             FormStatusSeeder::class,
             UserTypeSeeder::class,
             UserSeeder::class,
+            FormTemplateSeeder::class,
+            FormDetailsSeeder::class,
         ]);
 
     }

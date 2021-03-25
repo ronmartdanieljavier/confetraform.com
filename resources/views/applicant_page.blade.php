@@ -11,7 +11,7 @@
     <!-- All students -->
     <div class="card mb-4">
         <div class="card-header">List of Applicants
-            <button href="#" data-toggle="modal" data-target="#exampleModal" class="btn btn-primary btn-icon-split btn-sm">
+            <button href="#" data-toggle="modal" data-target="#exampleModal" class="btn btn-primary btn-icon-split btn-sm float-right">
                                         <span class="icon text-white-50">
                                             <i class="fas fa-mail-bulk"></i>
                                         </span>
@@ -62,14 +62,7 @@
                                         </span>
                                     <span class="text">View</span>
                                 </a>
-                                @if(!$row_data->email_verified_at)
-                                    <a href="#" class="btn btn-secondary btn-icon-split btn-sm">
-                                    <span class="icon text-white-50">
-                                            <i class="fas fa-envelope"></i>
-                                        </span>
-                                        <span class="text">Resend Verification</span>
-                                    </a>
-                                @endif
+
 
                                 @if($row_data->status == 1)
                                     <a href="#" class="btn btn-danger btn-sm">

@@ -15,8 +15,7 @@ class CreateApplicationsDetailsTable extends Migration
     {
         Schema::create('applications_details', function (Blueprint $table) {
             $table->id();
-            $table->integer("application_id");
-            $table->string("field_section");
+            $table->integer("application_section_id");
             $table->string("field_name");
             $table->string("field_label");
             $table->string("field_type");

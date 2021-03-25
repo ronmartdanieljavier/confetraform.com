@@ -18,6 +18,8 @@
     <!-- Styles -->
     <link href="{{ asset('css/sb-admin-2.min.css') }}" rel="stylesheet">
     <link href="{{ asset('vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
 </head>
 <body id="page-top">
 
@@ -30,68 +32,99 @@
         <!-- Sidebar - Brand -->
         <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
             <div class="sidebar-brand-icon rotate-n-15">
-                <i class="fas fa-laugh-wink"></i>
+                <img src="{{ asset("img/logo.png") }}" width="50px">
             </div>
-            <div class="sidebar-brand-text mx-3">Confetraform</div>
+            <div class="sidebar-brand-text mx-1">Confetraform</div>
         </a>
 
-        <!-- Divider -->
-        <hr class="sidebar-divider my-0">
 
-        <!-- Nav Item - Dashboard -->
-        <li class="nav-item active">
-            <a class="nav-link" href="{!! URL::to('/home') !!}">
-                <i class="fas fa-fw fa-tachometer-alt"></i>
-                <span>Dashboard</span></a>
+        @if(auth()->user()->user_type_id == "2")
+            <!-- Divider -->
+                <hr class="sidebar-divider my-0">
+            <!-- Nav Item - Dashboard -->
+                <li class="nav-item active">
+                    <a class="nav-link" href="{!! URL::to('/home') !!}">
+                        <i class="fas fa-fw fa-tachometer-alt"></i>
+                        <span>Dashboard</span></a>
+                </li>
+
+                <!-- Divider -->
+                <hr class="sidebar-divider">
+                <li class="nav-item">
+                    <a class="nav-link" href="{!! URL::to('/form-list') !!}">
+                        <i class="fas fa-file-alt"></i>
+                        <span>Manage Forms</span></a>
+                </li>
+                <hr class="sidebar-divider">
+        @endif()
+
+        <!-- Heading -->
+        <div class="sidebar-heading">
+            Application Forms
+        </div>
+
+        @if(auth()->user()->user_type_id == "2" OR auth()->user()->user_type_id == "3")
+            <li class="nav-item">
+                <a class="nav-link" href="{!! URL::to('/submitted-application-list') !!}">
+                    <i class="fab fa-wpforms"></i>
+                    <span>Submitted Applications</span></a>
+            </li>
+        @endif()
+        <li class="nav-item">
+            <a class="nav-link" href="{!! URL::to('/application-list') !!}">
+                <i class="fab fa-wpforms"></i>
+                <span>Application Forms</span></a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{!! URL::to('/your-application') !!}">
+                <i class="fab fa-wpforms"></i>
+                <span>Your Application</span></a>
+        </li>
+
 
         <!-- Divider -->
         <hr class="sidebar-divider">
-
-        <li class="nav-item">
-            <a class="nav-link" href="{!! URL::to('/sample') !!}">
-                <i class="fab fa-wpforms"></i>
-                <span>Applications</span></a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="{!! URL::to('/forms') !!}">
-                <i class="fas fa-file-alt"></i>
-                <span>Forms</span></a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
-               aria-expanded="true" aria-controls="collapsePages">
-                <i class="fas fa-users"></i>
-                <span>User Accounts</span>
-            </a>
-            <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                <div class="bg-white py-2 collapse-inner rounded">
-                    <h6 class="collapse-header">Administrators:</h6>
-                    <a class="collapse-item" href="{!! URL::to('/sys-admins') !!}">System Administrator</a>
-                    <a class="collapse-item" href="{!! URL::to('/uni-admins') !!}">University Administrator</a>
-                    <div class="collapse-divider"></div>
-                    <h6 class="collapse-header">University Users:</h6>
-                    <a class="collapse-item" href="{!! URL::to('/uni-approvers') !!}">Approvers</a>
-                    <a class="collapse-item" href="{!! URL::to('/uni-reviewers') !!}">Reviewers</a>
-                    <a class="collapse-item" href="{!! URL::to('/uni-applicants') !!}">Applicants</a>
+        @if(auth()->user()->user_type_id == "2")
+            <!-- Heading -->
+                <div class="sidebar-heading">
+                    Accounts
                 </div>
-            </div>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="{!! URL::to('/students') !!}">
-                <i class="fas fa-users"></i>
-                <span>Students</span></a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="{!! URL::to('/report') !!}">
-                <i class="fas fa-fw fa-chart-area"></i>
-                <span>Reports</span></a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="{!! URL::to('/settings') !!}">
-                <i class="fas fa-fw fa-cog"></i>
-                <span>Settings</span></a>
-        </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapsePages"
+                       aria-expanded="true" aria-controls="collapsePages">
+                        <i class="fas fa-users"></i>
+                        <span>User Accounts</span>
+                    </a>
+                    <div id="collapsePages" class="collapse show" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <h6 class="collapse-header">Administrators:</h6>
+                            <a class="collapse-item" href="{!! URL::to('/uni-admins') !!}">University Administrator</a>
+
+                            <div class="collapse-divider"></div>
+                            <h6 class="collapse-header">University Users:</h6>
+                            <a class="collapse-item" href="{!! URL::to('/uni-approvers') !!}">Approvers</a>
+                            <a class="collapse-item" href="{!! URL::to('/uni-applicants') !!}">Applicants</a>
+                        </div>
+                    </div>
+                </li>
+{{--                <li class="nav-item">--}}
+{{--                    <a class="nav-link" href="{!! URL::to('/report') !!}">--}}
+{{--                        <i class="fas fa-fw fa-chart-area"></i>--}}
+{{--                        <span>Reports</span></a>--}}
+{{--                </li>--}}
+                <li class="nav-item">
+                    <a class="nav-link" href="{!! URL::to('/settings') !!}">
+                        <i class="fas fa-fw fa-cog"></i>
+                        <span>Settings</span></a>
+                </li>
+                <!-- Divider -->
+                <hr class="sidebar-divider d-none d-md-block">
+        @endif()
+        <!-- Sidebar Toggler (Sidebar) -->
+        <div class="text-center d-none d-md-inline">
+            <button class="rounded-circle border-0" id="sidebarToggle"></button>
+        </div>
 
     </ul>
     <!-- End of Sidebar -->
@@ -111,18 +144,18 @@
                 </button>
 
                 <!-- Topbar Search -->
-                <form
-                    class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                    <div class="input-group">
-                        <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
-                               aria-label="Search" aria-describedby="basic-addon2">
-                        <div class="input-group-append">
-                            <button class="btn btn-primary" type="button">
-                                <i class="fas fa-search fa-sm"></i>
-                            </button>
-                        </div>
-                    </div>
-                </form>
+{{--                <form--}}
+{{--                    class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">--}}
+{{--                    <div class="input-group">--}}
+{{--                        <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."--}}
+{{--                               aria-label="Search" aria-describedby="basic-addon2">--}}
+{{--                        <div class="input-group-append">--}}
+{{--                            <button class="btn btn-primary" type="button">--}}
+{{--                                <i class="fas fa-search fa-sm"></i>--}}
+{{--                            </button>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </form>--}}
 
                 <!-- Topbar Navbar -->
                 <ul class="navbar-nav ml-auto">
@@ -202,76 +235,6 @@
                         </div>
                     </li>
 
-                    <!-- Nav Item - Messages -->
-                    <li class="nav-item dropdown no-arrow mx-1">
-                        <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button"
-                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-envelope fa-fw"></i>
-                            <!-- Counter - Messages -->
-                            <span class="badge badge-danger badge-counter">7</span>
-                        </a>
-                        <!-- Dropdown - Messages -->
-                        <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                             aria-labelledby="messagesDropdown">
-                            <h6 class="dropdown-header">
-                                Message Center
-                            </h6>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                <div class="dropdown-list-image mr-3">
-                                    <img class="rounded-circle" src="img/undraw_profile_1.svg"
-                                         alt="">
-                                    <div class="status-indicator bg-success"></div>
-                                </div>
-                                <div class="font-weight-bold">
-                                    <div class="text-truncate">Hi there! I am wondering if you can help me with a
-                                        problem I've been having.
-                                    </div>
-                                    <div class="small text-gray-500">Emily Fowler · 58m</div>
-                                </div>
-                            </a>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                <div class="dropdown-list-image mr-3">
-                                    <img class="rounded-circle" src="img/undraw_profile_2.svg"
-                                         alt="">
-                                    <div class="status-indicator"></div>
-                                </div>
-                                <div>
-                                    <div class="text-truncate">I have the photos that you ordered last month, how
-                                        would you like them sent to you?
-                                    </div>
-                                    <div class="small text-gray-500">Jae Chun · 1d</div>
-                                </div>
-                            </a>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                <div class="dropdown-list-image mr-3">
-                                    <img class="rounded-circle" src="img/undraw_profile_3.svg"
-                                         alt="">
-                                    <div class="status-indicator bg-warning"></div>
-                                </div>
-                                <div>
-                                    <div class="text-truncate">Last month's report looks great, I am very happy with
-                                        the progress so far, keep up the good work!
-                                    </div>
-                                    <div class="small text-gray-500">Morgan Alvarez · 2d</div>
-                                </div>
-                            </a>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                <div class="dropdown-list-image mr-3">
-                                    <img class="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60"
-                                         alt="">
-                                    <div class="status-indicator bg-success"></div>
-                                </div>
-                                <div>
-                                    <div class="text-truncate">Am I a good boy? The reason I ask is because someone
-                                        told me that people say this to all dogs, even if they aren't good...
-                                    </div>
-                                    <div class="small text-gray-500">Chicken the Dog · 2w</div>
-                                </div>
-                            </a>
-                            <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
-                        </div>
-                    </li>
-
                     <div class="topbar-divider d-none d-sm-block"></div>
 
                     <!-- Nav Item - User Information -->
@@ -279,8 +242,8 @@
                         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <span class="mr-2 d-none d-lg-inline text-gray-600 small">Ron Mart Daniel Javier</span>
-                            <img class="img-profile rounded-circle"
-                                 src="img/undraw_profile.svg">
+{{--                            <img class="img-profile rounded-circle"--}}
+{{--                                 src="img/undraw_profile.svg">--}}
                         </a>
                         <!-- Dropdown - User Information -->
                         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -288,14 +251,6 @@
                             <a class="dropdown-item" href="userprofile">
                                 <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                 Profile
-                            </a>
-                            <a class="dropdown-item" href="#">
-                                <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                Settings
-                            </a>
-                            <a class="dropdown-item" href="#">
-                                <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                Activity Log
                             </a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
@@ -314,13 +269,13 @@
             <div class="container-fluid">
                 @if(auth()->check())
                     @if(!auth()->user()->email_verified_at)
-                        <form class="d-inline" method="POST" action="{{ route('verification.resend') }}">
-                            @csrf
-                            <div class="alert alert-danger" role="alert">
-                                Your account is not verified yet. <button type="submit" class="btn btn-link p-0 m-0 align-baseline">{{ __('click here to request another') }}</button>.
-                            </div>
-                            .
-                        </form>
+{{--                        <form class="d-inline" method="POST" action="{{ route('verification.resend') }}">--}}
+{{--                            @csrf--}}
+{{--                            <div class="alert alert-danger" role="alert">--}}
+{{--                                Your account is not verified yet. <button type="submit" class="btn btn-link p-0 m-0 align-baseline">{{ __('click here to request another') }}</button>.--}}
+{{--                            </div>--}}
+{{--                            .--}}
+{{--                        </form>--}}
 
                     @endif
                 @endif

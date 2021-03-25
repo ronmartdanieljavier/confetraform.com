@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Auth;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -69,6 +70,70 @@ class User extends Authenticatable implements MustVerifyEmail
             $data_set = $data_set->where("user_type_id", $user_type_id);
         }
         $data_set = $data_set->get();
+        return $data_set;
+    }
+    public function getFirstUserAccountListByAuthId()
+    {
+        $data_set = $this->leftjoin("user_types", "user_types.id", "=", "user_type_id")
+            ->leftjoin("universities", "universities.id", "=", "users.university_id")
+            ->leftjoin("courses", "courses.id", "=", "course_id")
+            ->select(
+                "users.id AS user_id",
+                "first_name AS first_name",
+                "last_name AS last_name",
+                "email AS email",
+                "date_of_birth AS date_of_birth",
+                "student_number AS student_number",
+                "contact_number AS contact_number",
+                "street AS street",
+                "suburb AS suburb",
+                "state AS state",
+                "post_code AS post_code",
+                "country AS country",
+                "user_type_id AS user_type_id",
+                "user_types.user_type_name AS user_type_name",
+                "courses.university_id AS university_id",
+                "universities.university_name AS university_name",
+                "universities.university_branch AS university_branch",
+                "course_id AS course_id",
+                "courses.course_name AS course_name",
+                "users.status AS status",
+                "email_verified_at AS email_verified_at"
+            );
+        $data_set = $data_set->where("users.id", Auth::user()->id);
+        $data_set = $data_set->first();
+        return $data_set;
+    }
+    public function getFirstUserAccountListById($user_id)
+    {
+        $data_set = $this->leftjoin("user_types", "user_types.id", "=", "user_type_id")
+            ->leftjoin("universities", "universities.id", "=", "users.university_id")
+            ->leftjoin("courses", "courses.id", "=", "course_id")
+            ->select(
+                "users.id AS user_id",
+                "first_name AS first_name",
+                "last_name AS last_name",
+                "email AS email",
+                "date_of_birth AS date_of_birth",
+                "student_number AS student_number",
+                "contact_number AS contact_number",
+                "street AS street",
+                "suburb AS suburb",
+                "state AS state",
+                "post_code AS post_code",
+                "country AS country",
+                "user_type_id AS user_type_id",
+                "user_types.user_type_name AS user_type_name",
+                "courses.university_id AS university_id",
+                "universities.university_name AS university_name",
+                "universities.university_branch AS university_branch",
+                "course_id AS course_id",
+                "courses.course_name AS course_name",
+                "users.status AS status",
+                "email_verified_at AS email_verified_at"
+            );
+        $data_set = $data_set->where("users.id",$user_id);
+        $data_set = $data_set->first();
         return $data_set;
     }
 }
