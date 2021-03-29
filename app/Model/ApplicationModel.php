@@ -60,9 +60,11 @@ class ApplicationModel extends Model
             ->where("created.university_id", Auth::user()->university_id)
             ->leftjoin("users AS created", "created.id", "=", "created_by")
             ->leftjoin("users AS processed", "processed.id", "=", "processed_by")
+            ->leftjoin("users AS approver", "approver.id", "=", "approver_id")
             ->leftjoin("application_status AS status", "status.id", "=", "application_status_id")
             ->select(
                 DB::raw("applications.id AS id"),
+                DB::raw("applications.approver_id AS approver_id"),
                 DB::raw("form_name AS form_name"),
                 DB::raw("form_description AS form_description"),
                 DB::raw("created_by AS created_by_id"),
@@ -75,6 +77,7 @@ class ApplicationModel extends Model
                 DB::raw("created.course_id AS course_id"),
                 DB::raw("processed_by AS processed_by_id"),
                 DB::raw("CONCAT(processed.first_name, ' ', processed.last_name) AS processed_by"),
+                DB::raw("CONCAT(approver.first_name, ' ', approver.last_name) AS approver_name"),
                 DB::raw("application_status_id AS application_status_id"),
                 DB::raw("status.status_name AS status_name"),
                 DB::raw("applications.created_at AS created_at"),
@@ -111,8 +114,15 @@ class ApplicationModel extends Model
     }
     public function updateApplicationById($id, $array_data)
     {
-        return $this->where("id", $id)
-            ->update($array_data);
+        if(Auth::user()->user_type_id == 3) {
+            return $this->where("id", $id)
+                ->where("approver_id", Auth::user()->id)
+                ->update($array_data);
+        } else {
+            return $this->where("id", $id)
+                ->update($array_data);
+        }
+
     }
     public function deleteApplicationById($id)
     {
@@ -125,6 +135,28 @@ class ApplicationModel extends Model
             ->leftjoin("users AS created", "created.id", "=", "created_by")
             ->leftjoin("users AS processed", "processed.id", "=", "processed_by")
             ->leftjoin("application_status AS status", "status.id", "=", "application_status_id")
+            ->select(
+                DB::raw("applications.id AS id"),
+                DB::raw("form_name AS form_name"),
+                DB::raw("form_description AS form_description"),
+                DB::raw("created_by AS created_by_id"),
+                DB::raw("CONCAT(created.first_name, ' ', created.last_name) AS created_by"),
+                DB::raw("processed_by AS processed_by_id"),
+                DB::raw("CONCAT(processed.first_name, ' ', processed.last_name) AS processed_by"),
+                DB::raw("application_status_id AS application_status_id"),
+                DB::raw("status.status_name AS status_name"),
+                DB::raw("applications.created_at AS created_at"),
+                DB::raw("applications.processed_at AS processed_at")
+            )
+            ->get();
+    }
+    public function loadApproverSubmittedForm()
+    {
+        return $this->where("created.university_id", Auth::user()->university_id)
+            ->leftjoin("users AS created", "created.id", "=", "created_by")
+            ->leftjoin("users AS processed", "processed.id", "=", "processed_by")
+            ->leftjoin("application_status AS status", "status.id", "=", "application_status_id")
+            ->where("applications.approver_id", Auth::user()->id)
             ->select(
                 DB::raw("applications.id AS id"),
                 DB::raw("form_name AS form_name"),

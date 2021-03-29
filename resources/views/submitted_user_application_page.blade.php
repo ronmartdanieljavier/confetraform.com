@@ -56,7 +56,7 @@
                                     <span class="badge badge-warning">For Review</span>
                                     @break
                                     @case(2)
-                                    <span class="badge badge-warning">For Approval</span>
+                                    <span class="badge badge-info">For Approval</span>
                                     @break
                                     @case(3)
                                     <span class="badge badge-success">Approved</span>

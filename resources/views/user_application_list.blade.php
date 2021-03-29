@@ -3,7 +3,7 @@
 @section('content')
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Submitted Applications</h1>
+        <h1 class="h3 mb-0 text-gray-800">Your Submitted Applications</h1>
     </div>
     @if ($errors->any())
         <div class="alert alert-danger">

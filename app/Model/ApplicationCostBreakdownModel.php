@@ -41,6 +41,7 @@ class ApplicationCostBreakdownModel extends Model
         return $this->leftjoin("applications", "applications.id", "=", "application_cost_breakdown.application_id")
             ->leftjoin("users", "users.id", "=", "applications.created_by")
             ->where("users.university_id", Auth::user()->university_id)
+            ->where("applications.application_status_id", "3")
             ->sum("new_amount");
     }
     public function getTotalCostByMonth($month)
@@ -49,6 +50,7 @@ class ApplicationCostBreakdownModel extends Model
             ->leftjoin("users", "users.id", "=", "applications.created_by")
             ->where("users.university_id", Auth::user()->university_id)
             ->whereRaw("MONTH(applications.created_at) = ".$month)
+            ->where("applications.application_status_id", "3")
             ->sum("new_amount");
     }
 }

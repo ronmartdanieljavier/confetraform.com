@@ -70,57 +70,67 @@
                     <span>Submitted Applications</span></a>
             </li>
         @endif()
-        <li class="nav-item">
-            <a class="nav-link" href="{!! URL::to('/application-list') !!}">
-                <i class="fab fa-wpforms"></i>
-                <span>Application Forms</span></a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="{!! URL::to('/your-application') !!}">
-                <i class="fab fa-wpforms"></i>
-                <span>Your Application</span></a>
-        </li>
+        @if(auth()->user()->user_type_id == "2" OR auth()->user()->user_type_id == "4")
+            <li class="nav-item">
+                <a class="nav-link" href="{!! URL::to('/application-list') !!}">
+                    <i class="fab fa-wpforms"></i>
+                    <span>Application Forms</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{!! URL::to('/your-application') !!}">
+                    <i class="fab fa-wpforms"></i>
+                    <span>Your Application</span></a>
+            </li>
+        @endif
 
 
+        @if(auth()->user()->user_type_id == "1" OR auth()->user()->user_type_id == "2")
         <!-- Divider -->
-        <hr class="sidebar-divider">
-        @if(auth()->user()->user_type_id == "2")
-            <!-- Heading -->
-                <div class="sidebar-heading">
-                    Accounts
-                </div>
+            <hr class="sidebar-divider">
 
-                <li class="nav-item">
-                    <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapsePages"
-                       aria-expanded="true" aria-controls="collapsePages">
-                        <i class="fas fa-users"></i>
-                        <span>User Accounts</span>
-                    </a>
-                    <div id="collapsePages" class="collapse show" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                        <div class="bg-white py-2 collapse-inner rounded">
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Accounts
+            </div>
+
+            <li class="nav-item">
+                <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapsePages"
+                   aria-expanded="true" aria-controls="collapsePages">
+                    <i class="fas fa-users"></i>
+                    <span>User Accounts</span>
+                </a>
+                <div id="collapsePages" class="collapse show" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        @if(auth()->user()->user_type_id == "1")
                             <h6 class="collapse-header">Administrators:</h6>
                             <a class="collapse-item" href="{!! URL::to('/uni-admins') !!}">University Administrator</a>
 
                             <div class="collapse-divider"></div>
+                        @endif()
+                        @if(auth()->user()->user_type_id == "2")
                             <h6 class="collapse-header">University Users:</h6>
                             <a class="collapse-item" href="{!! URL::to('/uni-approvers') !!}">Approvers</a>
                             <a class="collapse-item" href="{!! URL::to('/uni-applicants') !!}">Applicants</a>
-                        </div>
+                        @endif
+
                     </div>
-                </li>
-{{--                <li class="nav-item">--}}
-{{--                    <a class="nav-link" href="{!! URL::to('/report') !!}">--}}
-{{--                        <i class="fas fa-fw fa-chart-area"></i>--}}
-{{--                        <span>Reports</span></a>--}}
-{{--                </li>--}}
-                <li class="nav-item">
-                    <a class="nav-link" href="{!! URL::to('/settings') !!}">
-                        <i class="fas fa-fw fa-cog"></i>
-                        <span>Settings</span></a>
-                </li>
+                </div>
+            </li>
+            {{--                <li class="nav-item">--}}
+            {{--                    <a class="nav-link" href="{!! URL::to('/report') !!}">--}}
+            {{--                        <i class="fas fa-fw fa-chart-area"></i>--}}
+            {{--                        <span>Reports</span></a>--}}
+            {{--                </li>--}}
+            <li class="nav-item">
+                <a class="nav-link" href="{!! URL::to('/settings') !!}">
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span>Settings</span></a>
+            </li>
+        @endif
+
                 <!-- Divider -->
                 <hr class="sidebar-divider d-none d-md-block">
-        @endif()
+
         <!-- Sidebar Toggler (Sidebar) -->
         <div class="text-center d-none d-md-inline">
             <button class="rounded-circle border-0" id="sidebarToggle"></button>
@@ -241,7 +251,9 @@
                     <li class="nav-item dropdown no-arrow">
                         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="mr-2 d-none d-lg-inline text-gray-600 small">Ron Mart Daniel Javier</span>
+                            <span class="mr-2 d-none d-lg-inline text-gray-600 small">
+                                {{ auth()->user()->first_name }} {{ auth()->user()->last_name }}
+                            </span>
 {{--                            <img class="img-profile rounded-circle"--}}
 {{--                                 src="img/undraw_profile.svg">--}}
                         </a>

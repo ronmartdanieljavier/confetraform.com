@@ -250,6 +250,8 @@ class ApplicationController extends Controller
                 if($form_model_data) {
                     $form_id = $form_model_data->id;
                     $form_name = $form_model_data->form_name;
+                    $approver_id = $form_model_data->approver_id;
+                    $approver_name = $form_model_data->approver_name;
                     $form_description = $form_model_data->form_description;
                     $status_name = $form_model_data->status_name;
                     $application_status_id = $form_model_data->application_status_id;
@@ -299,9 +301,13 @@ class ApplicationController extends Controller
                             $university_budget = $university_data->university_budget;
                         }
                         $new_balance = (float) $university_budget - (float) $total_cost;
+                        $approver_list = $user_model_holder->loadApproverWithDepartment();
                         $view_data_array[] = [
+                            "approver_list" => $approver_list,
                             "form_id" => $each_id,
                             "form_name" => $form_name,
+                            "approver_id" => $approver_id,
+                            "approver_name" => $approver_name,
                             "form_description" => $form_description,
                             "email" => $email,
                             "first_name" => $first_name,
@@ -341,6 +347,8 @@ class ApplicationController extends Controller
             if($form_model_data) {
                 $form_id = $form_model_data->id;
                 $form_name = $form_model_data->form_name;
+                $approver_id = $form_model_data->approver_id;
+                $approver_name = $form_model_data->approver_name;
                 $form_description = $form_model_data->form_description;
                 $status_name = $form_model_data->status_name;
                 $application_status_id = $form_model_data->application_status_id;
@@ -390,9 +398,15 @@ class ApplicationController extends Controller
                         $university_budget = $university_data->university_budget;
                     }
                     $new_balance = (float) $university_budget - (float) $total_cost;
+
+                    $approver_list = $user_model_holder->loadApproverWithDepartment();
+
                     $view_data_array = [
+                        "approver_list" => $approver_list,
                         "form_id" => $id,
                         "form_name" => $form_name,
+                        "approver_id" => $approver_id,
+                        "approver_name" => $approver_name,
                         "form_description" => $form_description,
                         "email" => $email,
                         "first_name" => $first_name,
@@ -425,7 +439,12 @@ class ApplicationController extends Controller
     public function loadAllSubmittedForm()
     {
         $form_model_holder = new ApplicationModel(); // initiate the model
-        $application_data = $form_model_holder->loadAllSubmittedForm(); // get the dataset from the model
+        if(Auth::user()->user_type_id == 2) {
+            $application_data = $form_model_holder->loadAllSubmittedForm(); // get the dataset from the model
+        }
+        if(Auth::user()->user_type_id == 3) {
+            $application_data = $form_model_holder->loadApproverSubmittedForm(); // get the dataset from the model
+        }
         //set $application_data into $form_list
         return view('submitted_user_application_page', ["form_list" => $application_data]);
     }
@@ -469,11 +488,15 @@ class ApplicationController extends Controller
                 $form_model_holder->updateApplicationById($application_id, $array_data);
                 break;
             case "Undo Status":
+                $application_status_id = 1;
+                if(Auth::user()->user_type_id == 3) {
+                    $application_status_id = 2;
+                }
                 $array_data = [
                     "processed_by" => null,
                     "processed_at" => null,
                     "processed_by_comment" => '',
-                    "application_status_id" => 1
+                    "application_status_id" => $application_status_id
                 ];
                 $form_model_holder->updateApplicationById($application_id, $array_data);
                 $application_breakdown_model = new ApplicationCostBreakdownModel();
@@ -489,6 +512,56 @@ class ApplicationController extends Controller
                     $university_model_holder->updateUniversityById($update_array);
                 }
                 break;
+        }
+        return Redirect::back();
+    }
+    public function saveApprover(Request $request)
+    {
+//        dd($request->all());
+        $application_id = $request->input("formId");
+        $approver_id = $request->input("approver_id");
+        $form_model_holder = new ApplicationModel();
+        $array_data = [
+            "approver_id" => $approver_id,
+            "application_status_id" => 2
+        ];
+        $form_model_holder->updateApplicationById($application_id, $array_data);
+        $application_breakdown_model = new ApplicationCostBreakdownModel();
+        $university_model_holder = new UniversityModel();
+        $university_data = $university_model_holder->getFirstUniversity();
+        if($university_data) {
+            $new_budget = $university_data->university_budget;
+            $breakdown_amount = $application_breakdown_model->getTotalCostById($application_id);
+            $new_budget = (float) $new_budget - (float) $breakdown_amount;
+            $update_array = [
+                "university_budget" => $new_budget
+            ];
+            $university_model_holder->updateUniversityById($update_array);
+        }
+        return Redirect::back();
+    }
+    public function removeApprover(Request $request)
+    {
+//        dd($request->all());
+        $application_id = $request->input("formId");
+        $approver_id = $request->input("approver_id");
+        $form_model_holder = new ApplicationModel();
+        $array_data = [
+            "approver_id" => 0,
+            "application_status_id" => 1
+        ];
+        $form_model_holder->updateApplicationById($application_id, $array_data);
+        $application_breakdown_model = new ApplicationCostBreakdownModel();
+        $university_model_holder = new UniversityModel();
+        $university_data = $university_model_holder->getFirstUniversity();
+        if($university_data) {
+            $new_budget = $university_data->university_budget;
+            $breakdown_amount = $application_breakdown_model->getTotalCostById($application_id);
+            $new_budget = (float) $new_budget - (float) $breakdown_amount;
+            $update_array = [
+                "university_budget" => $new_budget
+            ];
+            $university_model_holder->updateUniversityById($update_array);
         }
         return Redirect::back();
     }

@@ -27,6 +27,7 @@ class CreateApplicationsTable extends Migration
             $table->integer("processed_by")->nullable();
             $table->timestamp('processed_at', 0)->nullable();
             $table->text("processed_by_comment")->nullable();
+            $table->string("approver_id")->nullable();
         });
     }
 

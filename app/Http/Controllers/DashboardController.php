@@ -23,7 +23,7 @@ class DashboardController extends Controller
                 return $this->loadAdminDashboard();
                 break;
             case 3:
-                return $this->loadAdminDashboard();
+                return redirect("submitted-application-list");
                 break;
             case 4:
                 return redirect("your-application");

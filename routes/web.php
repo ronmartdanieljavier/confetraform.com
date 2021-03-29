@@ -91,7 +91,10 @@ Route::get('/submitted-application-view/{id}', "ApplicationController@viewSubmit
 Route::get('/compare-application-page', "ApplicationController@compareApplicationPage")->middleware('auth')->middleware('verified');;
 Route::post('/process-submitted-form', "ApplicationController@processSubmittedForm")->middleware('auth')->middleware('verified');;
 Route::post('/update-application-breakdown', "ApplicationController@updateApplicationBreakdown")->middleware('auth')->middleware('verified');;
+Route::post('/save-approver', "ApplicationController@saveApprover")->middleware('auth')->middleware('verified');
+Route::post('/remove-approver', "ApplicationController@removeApprover")->middleware('auth')->middleware('verified');
 
 Route::get('/home', "DashboardController@loadDashboard")->middleware('auth')->middleware('verified');
 
 Route::get('/userprofile', "UserProfileController@loadUserProfilePage")->middleware('auth')->middleware('verified');
+Route::post('/save-profile', "UserProfileController@saveProfile")->middleware('auth')->middleware('verified');

@@ -58,63 +58,117 @@
                             <div class="card mb-4">
                                 <div class="card-header">Account Details</div>
                                 <div class="card-body">
-                                    <form>
+
+                                    @if ($errors->any())
+                                        <div class="alert alert-danger">
+                                            <ul>
+                                                @foreach ($errors->all() as $error)
+                                                    <li>{{ $error }}</li>
+                                                @endforeach
+                                            </ul>
+                                        </div>
+                                    @endif
+                                    <form method="POST" action="{{ URL('save-profile') }}">
+                                        @csrf
                                         <!-- Form Group (usernumber)-->
                                         <div class="form-group">
-                                            <label class="small mb-1" for="inputUsernumber">Student / Staff Number</label>
-
-                                            <input class="form-control" id="inputUsernumber" type="text" placeholder="" value="{{ $var_for_user['student_number'] }}" />
+                                            <label class="small mb-1" for="inputUsernumber">Student / Staff Number</label> <br/>
+                                            {{ $var_for_user['student_number'] }}
                                         </div>
                                         <!-- Form Row-->
                                         <div class="form-row">
                                             <!-- Form Group (first name)-->
                                             <div class="form-group col-md-6">
-                                                <label class="small mb-1" for="inputFirstName">First name</label>
-                                                <input class="form-control" id="inputFirstName" type="text" placeholder="" value="{{ $var_for_user['first_name'] }}" />
+                                                <label class="small mb-1" for="inputFirstName">First name</label> <br/>
+                                                {{ $var_for_user['first_name'] }}
                                             </div>
                                             <!-- Form Group (last name)-->
                                             <div class="form-group col-md-6">
-                                                <label class="small mb-1" for="inputLastName">Last name</label>
-                                                <input class="form-control" id="inputLastName" type="text" placeholder="" value="{{ $var_for_user['last_name'] }}" />
-                                            </div>
-                                        </div>
-                                        <!-- Form Row        -->
-                                        <div class="form-row">
-                                            <!-- Form Group (course name)-->
-                                            <div class="form-group col-md-6">
-                                                <label class="small mb-1" for="inputCourse">Course name</label>
-                                                <select id="inputCourse" class="form-control">
-                                                    @foreach($var_for_course as $row_data2)
-                                                        <option value="{{ $row_data2['course_id'] }}">{{ $row_data2['course_name'] }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                            <!-- Form Group (address)-->
-                                            <div class="form-group col-md-6">
-                                                <label class="small mb-1" for="inputAddress">Address</label>
-                                                <input class="form-control" id="inputAddress" type="text" placeholder="" value="{{ $var_for_user['street'] }}" />
+                                                <label class="small mb-1" for="inputLastName">Last name</label><br/>
+                                                {{ $var_for_user['last_name'] }}
                                             </div>
                                         </div>
                                         <!-- Form Group (email address)-->
-                                        <div class="form-group">
-                                            <label class="small mb-1" for="inputEmailAddress">Email address</label>
-                                            <input class="form-control" id="inputEmailAddress" type="email" placeholder="" value="{{ $var_for_user['email'] }}" />
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label class="small mb-1" for="inputEmailAddress">Email address</label><br/>
+                                                {{ $var_for_user['email'] }}
+                                            </div>
+                                            <!-- Form Group (birthday)-->
+                                            <div class="form-group col-md-6">
+                                                <label class="small mb-1" for="inputBirthdate">Birthday</label> <br/>
+                                                {{ $var_for_user['date_of_birth'] }}
+                                            </div>
+
+                                        </div>
+                                            <div class="form-row">
+                                                <div class="form-group col-md-12">
+                                                    <label class="small mb-1" for="inputCourse">Course name</label> <br/>
+                                                    @foreach($var_for_course as $row_data2)
+                                                        @if($row_data2['course_id'] == $var_for_user["course_id"])
+                                                            {{ $row_data2['course_name'] }}
+                                                        @endif
+                                                    @endforeach
+                                                </div>
+                                            </div>
+                                        <!-- Form Row-->
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label class="small mb-1" for="inputAddress">Address</label>
+                                                <input class="form-control" id="inputAddress" type="text" placeholder="" name="street" value="{{ $var_for_user['street'] }}" required/>
+                                            </div>
+                                            <!-- Form Group (phone number)-->
+                                            <div class="form-group col-md-6">
+                                                <label class="small mb-1" for="inputPhone">Suburb</label>
+                                                <input class="form-control" id="inputPhone" name="suburb" placeholder="" value="{{ $var_for_user['suburb'] }}" required/>
+                                            </div>
                                         </div>
                                         <!-- Form Row-->
                                         <div class="form-row">
                                             <!-- Form Group (phone number)-->
                                             <div class="form-group col-md-6">
+                                                <label class="small mb-1" for="inputPhone">Post Code</label>
+                                                <input class="form-control" id="inputPhone" name="post_code" placeholder="" value="{{ $var_for_user['post_code'] }}" required/>
+                                            </div>
+
+                                            <!-- Form Group (birthday)-->
+                                            <div class="form-group col-md-6">
+                                                <label class="small mb-1" for="inputBirthdate">State</label>
+                                                <input class="form-control" id="inputBirthdate" name="state" placeholder="" value="{{ $var_for_user['state'] }}" required/>
+                                            </div>
+                                        </div>
+
+                                        <!-- Form Row-->
+                                        <div class="form-row">
+                                            <!-- Form Group (phone number)-->
+                                            <div class="form-group col-md-6">
                                                 <label class="small mb-1" for="inputPhone">Phone number</label>
-                                                <input class="form-control" id="inputPhone" type="tel" placeholder="" value="{{ $var_for_user['contact_number'] }}" />
+                                                <input class="form-control" id="inputPhone" type="tel" placeholder="" value="{{ $var_for_user['contact_number'] }}" name="contact_number" required/>
+                                            </div>
+
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="small mb-1" for="inputEmailAddress">Current Password</label>
+                                            <input class="form-control" id="inputEmailAddress" type="password" name="current_password" placeholder="" value="" required/>
+                                        </div>
+                                        <div class="alert alert-secondary" role="alert">
+                                            Leave the fields below if you don't want to change your password
+                                        </div>
+                                        <!-- Form Row-->
+                                        <div class="form-row">
+                                            <!-- Form Group (phone number)-->
+                                            <div class="form-group col-md-6">
+                                                <label class="small mb-1" for="inputPhone">New Password</label>
+                                                <input class="form-control" id="inputPhone" type="password" name="new_password" placeholder="" value=""/>
                                             </div>
                                             <!-- Form Group (birthday)-->
                                             <div class="form-group col-md-6">
-                                                <label class="small mb-1" for="inputBirthdate">Birthday</label>
-                                                <input class="form-control" id="inputBirthdate" type="text" name="birthdate" placeholder="" value="{{ $var_for_user['date_of_birth'] }}" />
+                                                <label class="small mb-1" for="inputBirthdate">Confirm New Password</label>
+                                                <input class="form-control" id="inputBirthdate" type="password" name="new_confirm_password" placeholder="" value=""/>
                                             </div>
                                         </div>
                                         <!-- Save changes button-->
-                                        <button class="btn btn-primary" type="button">Save changes</button>
+                                        <button class="btn btn-primary" type="submit">Save changes</button>
                                     </form>
                                 </div>
                             </div>

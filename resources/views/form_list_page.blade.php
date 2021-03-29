@@ -3,7 +3,7 @@
 @section('content')
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">University Form Template</h1>
+        <h1 class="h3 mb-0 text-gray-800">Manage Form</h1>
     </div>
     @if ($errors->any())
         <div class="alert alert-danger">
@@ -16,7 +16,7 @@
     @endif
     <!-- All students -->
     <div class="card mb-4">
-        <div class="card-header">List of University Forms
+        <div class="card-header">List of Forms
             <button data-toggle="modal" data-target="#exampleModal" class="btn btn-primary btn-icon-split btn-sm float-right">
                                         <span class="icon text-white-50">
                                             <i class="fas fa-plus"></i>

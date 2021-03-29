@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+
     @switch($application_status_id)
         @case(1)
         <div class="alert alert-warning" role="alert">
@@ -8,7 +9,7 @@
         </div>
         @break
         @case(2)
-        <div class="alert alert-warning" role="alert">
+        <div class="alert alert-info" role="alert">
             This Form is for Approval
         </div>
         @break
@@ -43,9 +44,10 @@
                         @csrf
                         <input type="hidden" name="formId" value="{{ $form_id }}">
                         <div class="mb-3">
-                            <label for="exampleFormControlTextarea1" class="form-label">Comments</label>
+
                             @if($application_status_id == "1")
-                                <textarea class="form-control" name="comment" id="exampleFormControlTextarea1" rows="3"></textarea>
+{{--                                <label for="exampleFormControlTextarea1" class="form-label">Comments</label>--}}
+{{--                                <textarea class="form-control" name="comment" id="exampleFormControlTextarea1" rows="3"></textarea>--}}
                             @else
                                 Processed by: <strong>{{ $processed_by }}</strong> <br/>
                                 <strong>{{ $processed_at }}</strong> <br/>

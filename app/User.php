@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -135,5 +136,21 @@ class User extends Authenticatable implements MustVerifyEmail
         $data_set = $data_set->where("users.id",$user_id);
         $data_set = $data_set->first();
         return $data_set;
+    }
+    public function updateAuthUser($update_array)
+    {
+        return $this->where("id", Auth::user()->id)->update($update_array);
+    }
+
+    public function loadApproverWithDepartment()
+    {
+        return $this->leftjoin("department","department.id","=","users.department_id")
+            ->where("users.university_id", Auth::user()->university_id)
+            ->where("users.user_type_id", "3")
+            ->select(
+                DB::raw("users.id AS id"),
+                DB::raw("CONCAT(users.email, ' (', department.department_name, ')') AS label")
+            )
+            ->get();
     }
 }

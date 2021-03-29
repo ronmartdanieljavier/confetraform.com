@@ -11,7 +11,7 @@ class FormDetailsSeeder extends Seeder
      */
     public function run()
     {
-        for($x=1; $x<=10; $x++) {
+        for($x=1; $x<=1; $x++) {
             $getId = DB::table('form_section')->insertGetId([
                 'form_id' => $x,
                 'form_section' => "Conference Details",
@@ -69,6 +69,15 @@ class FormDetailsSeeder extends Seeder
                 'field_type' => "EMAIL",
                 'field_value' => "",
                 'field_order' => 6,
+                'field_required' => false,
+            ]);
+            DB::table('form_details')->insert([
+                'form_section_id' => $getId,
+                'field_name' => "ReportSummary",
+                'field_label' => "Report Summary",
+                'field_type' => "TEXTAREA",
+                'field_value' => "",
+                'field_order' => 7,
                 'field_required' => false,
             ]);
 
