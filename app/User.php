@@ -18,7 +18,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'first_name','last_name', 'email', 'password', 'university_id', 'user_type_id', 'status', 'email_verified_at'
+        'first_name','last_name', 'email', 'password', 'university_id', 'user_type_id', 'status', 'email_verified_at', 'date_of_birth', 'student_number', 'course_id', 'department_id'
     ];
 
     /**
@@ -140,6 +140,10 @@ class User extends Authenticatable implements MustVerifyEmail
     public function updateAuthUser($update_array)
     {
         return $this->where("id", Auth::user()->id)->update($update_array);
+    }
+    public function updateUser($id, $update_array)
+    {
+        return $this->where("id",$id)->update($update_array);
     }
 
     public function loadApproverWithDepartment()

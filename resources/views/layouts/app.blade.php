@@ -19,7 +19,7 @@
     <link href="{{ asset('css/sb-admin-2.min.css') }}" rel="stylesheet">
     <link href="{{ asset('vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 <body id="page-top">
 
@@ -122,9 +122,9 @@
             {{--                        <span>Reports</span></a>--}}
             {{--                </li>--}}
             <li class="nav-item">
-                <a class="nav-link" href="{!! URL::to('/settings') !!}">
+                <a class="nav-link" href="{!! URL::to('/budget-settings') !!}">
                     <i class="fas fa-fw fa-cog"></i>
-                    <span>Settings</span></a>
+                    <span>Budget Settings</span></a>
             </li>
         @endif
 

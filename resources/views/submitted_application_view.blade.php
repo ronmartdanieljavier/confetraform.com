@@ -54,7 +54,9 @@
                         </form>
                     </div>
                 @endif
+
                 @if(($application_status_id == "1" OR $application_status_id == "3" OR $application_status_id == "4") OR ($application_status_id == "2" AND $approver_id == auth()->user()->id))
+
                         <div class="col-md-6 text-right" style="display: none" id="assign_div">
                             <form method="POST" action="{{ URL('save-approver') }}">
                                 @csrf
@@ -90,7 +92,7 @@
                                     <div class="btn-group" role="group" aria-label="Basic example">
                                         <input type="submit" class="btn btn-success" name="action" value="Approve"/>
                                         <input type="submit" class="btn btn-danger" name="action" value="Disapprove"/>
-                                        @if(auth()->user()->user_type_id==1)
+                                        @if(auth()->user()->user_type_id==2)
                                             <input type="button" onclick="showAssignDiv()" class="btn btn-secondary" name="action" value="Assign Approver"/>
                                         @endif
                                     </div>

@@ -28,7 +28,7 @@
                                 <div class="col-auto mb-3">
                                     <h1 class="page-header-title">
                                         <div class="page-header-icon"><i data-feather="user"></i></div>
-                                        Account Settings - Profile
+                                        User Details
                                     </h1>
                                 </div>
                             </div>
@@ -56,7 +56,7 @@
                         <div class="col-xl-12">
                             <!-- Account details card-->
                             <div class="card mb-4">
-                                <div class="card-header">Account Details</div>
+                                <div class="card-header">Information</div>
                                 <div class="card-body">
 
                                     @if ($errors->any())
@@ -68,36 +68,42 @@
                                             </ul>
                                         </div>
                                     @endif
-                                    <form method="POST" action="{{ URL('save-profile') }}">
+                                    <form method="POST" action="{{ URL('save-user') }}">
                                         @csrf
                                         <!-- Form Group (usernumber)-->
+                                            <input type="hidden" name="user_id" value="{{ $var_for_user['user_id'] }}">
                                         <div class="form-group">
                                             <label class="small mb-1" for="inputUsernumber">Student / Staff Number</label> <br/>
-                                            {{ $var_for_user['student_number'] }}
+                                            <input class="form-control" id="inputAddress" type="text" placeholder="" name="student_number" value="{{ $var_for_user['student_number'] }}" required/>
+
                                         </div>
                                         <!-- Form Row-->
                                         <div class="form-row">
                                             <!-- Form Group (first name)-->
                                             <div class="form-group col-md-6">
                                                 <label class="small mb-1" for="inputFirstName">First name</label> <br/>
-                                                {{ $var_for_user['first_name'] }}
+                                                <input class="form-control" id="inputAddress" type="text" placeholder="" name="first_name" value="{{ $var_for_user['first_name'] }}" required/>
+
                                             </div>
                                             <!-- Form Group (last name)-->
                                             <div class="form-group col-md-6">
                                                 <label class="small mb-1" for="inputLastName">Last name</label><br/>
-                                                {{ $var_for_user['last_name'] }}
+                                                <input class="form-control" id="inputAddress" type="text" placeholder="" name="last_name" value="{{ $var_for_user['last_name'] }}" required/>
+
                                             </div>
                                         </div>
                                         <!-- Form Group (email address)-->
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
                                                 <label class="small mb-1" for="inputEmailAddress">Email address</label><br/>
-                                                {{ $var_for_user['email'] }}
+                                                <input class="form-control" id="inputAddress" type="email" placeholder="" name="email" value="{{ $var_for_user['email'] }}" required/>
+
                                             </div>
                                             <!-- Form Group (birthday)-->
                                             <div class="form-group col-md-6">
                                                 <label class="small mb-1" for="inputBirthdate">Birthday</label> <br/>
-                                                {{ $var_for_user['date_of_birth'] }}
+                                                <input class="form-control" id="inputAddress" type="text" placeholder="" name="date_of_birth" value="{{ $var_for_user['date_of_birth'] }}" required/>
+
                                             </div>
 
                                         </div>
@@ -106,11 +112,16 @@
                                                 <div class="form-row">
                                                     <div class="form-group col-md-12">
                                                         <label class="small mb-1" for="inputCourse">Course</label> <br/>
-                                                        @foreach($var_for_course as $row_data2)
-                                                            @if($row_data2['course_id'] == $var_for_user["course_id"])
-                                                                {{ $row_data2['course_name'] }}
-                                                            @endif
-                                                        @endforeach
+                                                        <select id="inputState" name="course_id" class="form-control" required>
+                                                            <option selected>Choose approver</option>
+                                                            @foreach($var_for_course as $row_data2)
+                                                                @if($row_data2['course_id'] == $var_for_user["course_id"])
+                                                                    <option value="{{ $row_data2['course_id'] }}" selected>{{ $row_data2['course_name'] }}</option>
+                                                                @else
+                                                                    <option value="{{ $row_data2['course_id'] }}">{{ $row_data2['course_name'] }}</option>
+                                                                @endif
+                                                            @endforeach
+                                                        </select>
                                                     </div>
                                                 </div>
                                             @endif
@@ -118,7 +129,16 @@
                                                 <div class="form-row">
                                                     <div class="form-group col-md-12">
                                                         <label class="small mb-1" for="inputCourse">Department</label> <br/>
-                                                        {{ $var_for_user['department_name'] }}
+                                                        <select id="inputState" name="course_id" class="form-control" required>
+                                                            <option selected>Choose approver</option>
+                                                            @foreach($var_for_department as $row_data2)
+                                                                @if($row_data2['department_id'] == $var_for_user["department_id"])
+                                                                    <option value="{{ $row_data2['department_id'] }}" selected>{{ $row_data2['department_name'] }}</option>
+                                                                @else
+                                                                    <option value="{{ $row_data2['department_id'] }}">{{ $row_data2['department_name'] }}</option>
+                                                                @endif
+                                                            @endforeach
+                                                        </select>
                                                     </div>
                                                 </div>
                                             @endif
@@ -158,10 +178,6 @@
                                                 <input class="form-control" id="inputPhone" type="tel" placeholder="" value="{{ $var_for_user['contact_number'] }}" name="contact_number" required/>
                                             </div>
 
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="small mb-1" for="inputEmailAddress">Current Password</label>
-                                            <input class="form-control" id="inputEmailAddress" type="password" name="current_password" placeholder="" value="" required/>
                                         </div>
                                         <div class="alert alert-secondary" role="alert">
                                             Leave the fields below if you don't want to change your password

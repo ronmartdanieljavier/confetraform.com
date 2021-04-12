@@ -4,8 +4,8 @@
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">Approver Accounts</h1>
-        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+{{--        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i--}}
+{{--                class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>--}}
     </div>
 
     <!-- All students -->
@@ -54,7 +54,7 @@
                                 @endif
                             </td>
                             <td>
-                                <a href="#" class="btn btn-primary btn-icon-split btn-sm">
+                                <a href="{{ URL::to("/view-user/".$row_data->user_id) }}" class="btn btn-primary btn-icon-split btn-sm">
                                     <span class="icon text-white-50">
                                             <i class="fas fa-eye"></i>
                                         </span>
@@ -63,11 +63,11 @@
 
 
                                 @if($row_data->status == 1)
-                                    <a href="#" class="btn btn-danger btn-sm">
+                                    <a href="{{ URL::to("/deactivate-user/".$row_data->user_id) }}" class="btn btn-danger btn-sm">
                                         <span class="text">Inactive</span>
                                     </a>
                                 @else
-                                    <a href="#" class="btn btn-success btn-sm">
+                                    <a href="{{ URL::to("/activate-user/".$row_data->user_id) }}" class="btn btn-success btn-sm">
                                         <span class="text">Active</span>
                                     </a>
                                 @endif
@@ -79,7 +79,6 @@
             </div>
         </div>
 
-
         <!-- Modal -->
         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -90,22 +89,113 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
+                    <form id="send-invitation">
                     <div class="modal-body">
-                        <form>
-                            <div class="form-row">
-                                <div class="form-group col-md-12">
-                                    <label for="inputEmail4">Email</label>
-                                    <input type="email" class="form-control" id="inputEmail4">
-                                </div>
+                        <div class="alert alert-danger" id="error-div" style="display: none">
+                            <ul id="error-ul">
+                            </ul>
+                        </div>
+                        <div class="form-group">
+                            <b><span class="text-success" id="success-message"> </span></b>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label for="email">Email</label>
+                                <input type="email" name="email" class="form-control" id="email" required>
                             </div>
-                        </form>
+                            <div class="form-group col-md-12">
+                                <label for="first_name">First Name</label>
+                                <input type="text" name="first_name" class="form-control" id="first_name" required>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label for="last_name">Last Name</label>
+                                <input type="text" name="last_name" class="form-control" id="last_name" required>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label for="date_of_birth">Date Of Birth</label>
+                                <input type="text" name="date_of_birth" class="form-control" id="date_of_birth" required>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label for="student_number">Staff Number</label>
+                                <input type="text" name="student_number" class="form-control" id="student_number" required>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label for="department_id">Department</label>
+                                <select id="department_id" name="department_id" class="form-control" required>
+                                    <option value="" selected>Choose...</option>
+                                    @foreach($department_list as $row_data)
+                                        <option value="{{ $row_data->department_id }}">{{ $row_data->department_name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Send Invite</button>
+                        <button type="submit" class="btn btn-primary">Send Invite</button>
                     </div>
+                    </form>
                 </div>
             </div>
         </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
 
+        <script type="text/javascript">
+
+
+            $('#send-invitation').on('submit', function(event){
+                event.preventDefault();
+
+                $('#error-ul').html('');
+                let email = $('#email').val();
+                let first_name = $('#first_name').val();
+                let last_name = $('#last_name').val();
+                let date_of_birth = $('#date_of_birth').val();
+                let student_number = $('#student_number').val();
+                let contact_number = $('#contact_number').val();
+                let department_id = $('#department_id').val();
+                if(email === '') $('#error-ul').append('<li>Please provide a valid email address</li>');
+                if(department_id === '') $('#error-ul').append('<li>Please provide a valid department</li>');
+                if(first_name === '') $('#error-ul').append('<li>Please provide a valid first name</li>');
+                if(last_name === '') $('#error-ul').append('<li>Please provide a valid last name</li>');
+                if(date_of_birth === '') $('#error-ul').append('<li>Please provide a valid date of birth</li>');
+                if(student_number === '') $('#error-ul').append('<li>Please provide a valid student or staff number</li>');
+                if($('#error-ul').html() !== '') $('#error-div').show();
+                else {
+                    $.ajax({
+                        url: "{{ URL::to('/send-approver-invitation') }}",
+                        type: "POST",
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        data:{
+                            email:email,
+                            first_name:first_name,
+                            last_name:last_name,
+                            date_of_birth:date_of_birth,
+                            student_number:student_number,
+                            department_id:department_id,
+                        },
+                        success:function(response){
+                            $('#error-div').hide();
+                            if (response) {
+                                $('#success-message').text(response.success);
+                                $("#contact-form")[0].reset();
+                                location.reload();
+                            }
+                        },
+                        error: function(response) {
+                            let error_list = response.responseJSON.errors;
+                            for(data in error_list) {
+                                $('#error-ul').append('<li>'+error_list[data][0]+'</li>');
+                            }
+                            if($('#error-ul').html() !== '') $('#error-div').show();
+                        }
+                    });
+                }
+
+            });
+        </script>
 @endsection

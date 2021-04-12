@@ -56,6 +56,7 @@ class FormTemplateModel extends Model
     public function deleteFormTemplate($id)
     {
         return $this->where("id", $id)
+            ->where("university_id", Auth::user()->university_id)
             ->delete();
     }
     public function getFirstFormById($university_id, $id)

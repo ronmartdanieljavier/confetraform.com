@@ -48,9 +48,6 @@ Route::get('/regstaff', function () {
 Route::get('/students', function () {
     return view('students_page');
 })->middleware('auth');
-Route::get('/userprofile', function () {
-    return view('userprofile_page');
-})->middleware('auth');
 Route::get('/security', function () {
     return view('usersecurity_page');
 })->middleware('auth');
@@ -98,3 +95,16 @@ Route::get('/home', "DashboardController@loadDashboard")->middleware('auth')->mi
 
 Route::get('/userprofile', "UserProfileController@loadUserProfilePage")->middleware('auth')->middleware('verified');
 Route::post('/save-profile', "UserProfileController@saveProfile")->middleware('auth')->middleware('verified');
+Route::post('/save-user', "UserProfileController@saveUser")->middleware('auth')->middleware('verified');
+
+
+Route::post('/send-approver-invitation', "RegisterController@inviteApprover")->middleware('auth')->middleware('verified');
+Route::post('/send-applicant-invitation', "RegisterController@inviteApplicant")->middleware('auth')->middleware('verified');
+Route::post('/send-uni-admin-invitation', "RegisterController@inviteUniAdmin")->middleware('auth')->middleware('verified');
+
+Route::get('/deactivate-user/{id}', "SystemAdminController@deactivateUser")->middleware('auth')->middleware('verified');
+Route::get('/activate-user/{id}', "SystemAdminController@activateUser")->middleware('auth')->middleware('verified');
+
+Route::get('/view-user/{id}', "UserProfileController@loadUserPage")->middleware('auth')->middleware('verified');
+Route::get('/budget-settings', "SystemAdminController@loadBudgetSettingPage")->middleware('auth')->middleware('verified');
+Route::post('/save-budget', "SystemAdminController@saveUniversityBudget")->middleware('auth')->middleware('verified');
