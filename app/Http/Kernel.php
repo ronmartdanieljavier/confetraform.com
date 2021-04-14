@@ -64,5 +64,11 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'checkstatus' => \App\Http\Middleware\CheckStatus::class,
+        'sys.admin' => \App\Http\Middleware\SysAdminCheck::class,
+        'uni.admin' => \App\Http\Middleware\UniAdminCheck::class,
+        'sys.uni.admin' => \App\Http\Middleware\SysUniAdminCheck::class,
+        'uni.admin.approver' => \App\Http\Middleware\UniAdminApproverCheck::class,
+        'approver' => \App\Http\Middleware\ApproverCheck::class,
+        'applicant' => \App\Http\Middleware\ApplicantCheck::class,
     ];
 }
