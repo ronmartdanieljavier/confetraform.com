@@ -30,7 +30,7 @@ class CreateUsersTable extends Migration
             $table->integer("user_type_id");
             $table->integer("course_id")->nullable();;
             $table->integer("department_id")->nullable();;
-            $table->integer("university_id");
+            $table->integer("university_id")->nullable();
             $table->boolean("status")->default(true);
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();

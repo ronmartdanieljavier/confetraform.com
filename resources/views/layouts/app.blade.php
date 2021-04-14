@@ -70,7 +70,7 @@
                     <span>Submitted Applications</span></a>
             </li>
         @endif()
-        @if(auth()->user()->user_type_id == "2" OR auth()->user()->user_type_id == "4")
+        @if(auth()->user()->user_type_id == "4")
             <li class="nav-item">
                 <a class="nav-link" href="{!! URL::to('/application-list') !!}">
                     <i class="fab fa-wpforms"></i>
@@ -116,20 +116,31 @@
                     </div>
                 </div>
             </li>
-            {{--                <li class="nav-item">--}}
-            {{--                    <a class="nav-link" href="{!! URL::to('/report') !!}">--}}
-            {{--                        <i class="fas fa-fw fa-chart-area"></i>--}}
-            {{--                        <span>Reports</span></a>--}}
-            {{--                </li>--}}
-            <li class="nav-item">
-                <a class="nav-link" href="{!! URL::to('/budget-settings') !!}">
-                    <i class="fas fa-fw fa-cog"></i>
-                    <span>Budget Settings</span></a>
-            </li>
+        @endif
+        @if(auth()->user()->user_type_id == "2")
+                <li class="nav-item">
+                    <a class="nav-link" href="{!! URL::to('/budget-settings') !!}">
+                        <i class="fas fa-fw fa-cog"></i>
+                        <span>Budget Settings</span></a>
+                </li>
+        @endif
+        @if(auth()->user()->user_type_id == "2")
+                <li class="nav-item">
+                    <a class="nav-link" href="{!! URL::to('/course-settings') !!}">
+                        <i class="fas fa-fw fa-cog"></i>
+                        <span>Course Settings</span></a>
+                </li>
+        @endif
+        @if(auth()->user()->user_type_id == "1")
+                <li class="nav-item">
+                    <a class="nav-link" href="{!! URL::to('/university-settings') !!}">
+                        <i class="fas fa-fw fa-cog"></i>
+                        <span>Universities</span></a>
+                </li>
         @endif
 
-                <!-- Divider -->
-                <hr class="sidebar-divider d-none d-md-block">
+        <!-- Divider -->
+        <hr class="sidebar-divider d-none d-md-block">
 
         <!-- Sidebar Toggler (Sidebar) -->
         <div class="text-center d-none d-md-inline">
@@ -193,57 +204,30 @@
                             </form>
                         </div>
                     </li>
+                    @if(auth()->user()->user_type_id == "2" OR auth()->user()->user_type_id == "3" OR auth()->user()->user_type_id == "4")
+                        <!-- Nav Item - Alerts -->
+                            <li class="nav-item dropdown no-arrow mx-1">
+                                <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
+                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fas fa-bell fa-fw"></i>
+                                    <!-- Counter - Alerts -->
+                                    <span class="badge badge-secondary badge-counter" id="total_unread"></span>
+                                </a>
+                                <!-- Dropdown - Alerts -->
+                                <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                     aria-labelledby="alertsDropdown">
+                                    <h6 class="dropdown-header">
+                                        Notification
+                                    </h6>
+                                    <div id="notification-div">
 
-                    <!-- Nav Item - Alerts -->
-                    <li class="nav-item dropdown no-arrow mx-1">
-                        <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
-                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-bell fa-fw"></i>
-                            <!-- Counter - Alerts -->
-                            <span class="badge badge-danger badge-counter">3+</span>
-                        </a>
-                        <!-- Dropdown - Alerts -->
-                        <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                             aria-labelledby="alertsDropdown">
-                            <h6 class="dropdown-header">
-                                Alerts Center
-                            </h6>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                <div class="mr-3">
-                                    <div class="icon-circle bg-primary">
-                                        <i class="fas fa-file-alt text-white"></i>
                                     </div>
+
+{{--                                    <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>--}}
                                 </div>
-                                <div>
-                                    <div class="small text-gray-500">December 12, 2019</div>
-                                    <span class="font-weight-bold">A new monthly report is ready to download!</span>
-                                </div>
-                            </a>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                <div class="mr-3">
-                                    <div class="icon-circle bg-success">
-                                        <i class="fas fa-donate text-white"></i>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="small text-gray-500">December 7, 2019</div>
-                                    $290.29 has been deposited into your account!
-                                </div>
-                            </a>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                <div class="mr-3">
-                                    <div class="icon-circle bg-warning">
-                                        <i class="fas fa-exclamation-triangle text-white"></i>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="small text-gray-500">December 2, 2019</div>
-                                    Spending Alert: We've noticed unusually high spending for your account.
-                                </div>
-                            </a>
-                            <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
-                        </div>
-                    </li>
+                            </li>
+                    @endif
+
 
                     <div class="topbar-divider d-none d-sm-block"></div>
 
@@ -364,12 +348,36 @@
 <script src="{{ asset('js/demo/chart-pie-demo.js') }}"></script>
 <script src="{{ asset('vendor/datatables/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
 
 <script>
     // Call the dataTables jQuery plugin
     $(document).ready(function() {
+        $.ajax({
+            url: "{{ URL::to('/load-notification') }}",
+            type: "GET",
+            success:function(response){
+                let total_unread = response.total_unread;
+                if(total_unread === 0) total_unread = "";
+                $("#total_unread").html(total_unread);
+                let list = response.list;
+                for(let x = 0; x <= list.length - 1; x++) {
+                    let created_date = list[x].created_date;
+                    let link = list[x].link;
+                    let notification_message = list[x].notification_message;
+                    let notification_sign = list[x].notification_sign;
+                    let read_flag = list[x].read_flag;
+                    let content = '<a class="dropdown-item d-flex align-items-center" href="{{ URL::to('/') }}'+link+'"> <div class="mr-3"> <div class="icon-circle bg-'+notification_sign+'"> <i class="fas fa-exclamation-triangle text-white"></i></div></div><div><div class="small text-gray-500">'+created_date+'</div>'+notification_message+'</div></a>';
+                    $('#notification-div').append(content);
+                }
+            }
+        });
         $('#dataTable').DataTable();
+
+
     });
+
+
 </script>
 </body>
 </html>

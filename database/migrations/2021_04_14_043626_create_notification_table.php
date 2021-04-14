@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCoursesTable extends Migration
+class CreateNotificationTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,13 @@ class CreateCoursesTable extends Migration
      */
     public function up()
     {
-        Schema::create('courses', function (Blueprint $table) {
+        Schema::create('notification', function (Blueprint $table) {
             $table->id();
-            $table->integer("university_id");
-            $table->string("course_code");
-            $table->string("course_name");
-            $table->boolean("status")->default(true);
+            $table->integer("user_id");
+            $table->string("sign");
+            $table->text("message");
+            $table->text("link");
+            $table->boolean("read_flag")->default(false);
             $table->timestamps();
         });
     }
@@ -30,6 +31,6 @@ class CreateCoursesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('courses');
+        Schema::dropIfExists('notification');
     }
 }

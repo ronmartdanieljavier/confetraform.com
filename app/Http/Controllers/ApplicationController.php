@@ -7,8 +7,10 @@ use App\Model\ApplicationDetailModel;
 use App\Model\ApplicationModel;
 use App\Model\ApplicationSectionModel;
 use App\Model\FormTemplateModel;
+use App\Model\NotificationModel;
 use App\Model\UniversityModel;
 use App\User;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -147,6 +149,8 @@ class ApplicationController extends Controller
                 $application_breakdown_model->createApplicationBreakdown($insert_array);
             }
 
+            $notification_model_holder = new NotificationModel();
+            $notification_model_holder->sendNotificationToUniAdmin($application_id);
         }
         return redirect("your-application");
     }
@@ -345,6 +349,7 @@ class ApplicationController extends Controller
             $form_model_holder = new ApplicationModel();
             $form_model_data = $form_model_holder->getFirstUniversityFormById($id);
             if($form_model_data) {
+
                 $form_id = $form_model_data->id;
                 $form_name = $form_model_data->form_name;
                 $approver_id = $form_model_data->approver_id;
@@ -359,7 +364,11 @@ class ApplicationController extends Controller
                 $created_by_id = $form_model_data->created_by_id;
                 $form_detail_data = $form_model_holder->getFormDetails($form_id);
                 $form_detail_list = [];
-
+                if(Auth::user()->user_type_id == 3) {
+                    if($approver_id !== Auth::user()->id) {
+                        return redirect("/submitted-application-list");
+                    }
+                }
                 $form_section_uniq = collect($form_detail_data)->unique("form_section");
                 foreach ($form_section_uniq as $section_data) {
 //                    $field_section_detail_list = [];
@@ -464,6 +473,7 @@ class ApplicationController extends Controller
                     "application_status_id" => 3
                 ];
                 $form_model_holder->updateApplicationById($application_id, $array_data);
+
                 $application_breakdown_model = new ApplicationCostBreakdownModel();
                 $university_model_holder = new UniversityModel();
                 $university_data = $university_model_holder->getFirstUniversity();
@@ -474,9 +484,11 @@ class ApplicationController extends Controller
                     $update_array = [
                         "university_budget" => $new_budget
                     ];
-                    $university_model_holder->updateUniversityById($update_array);
+                    $university_model_holder->updateUniversityByAuthId($update_array);
                 }
-
+                $app_data = $form_model_holder->getFirstUniversityFormById($application_id);
+                $notification_model_holder = new NotificationModel();
+                $notification_model_holder->sendNotificationToApplicant($app_data->created_by_id, "success", "Your application has been approved", "/view-application/".$application_id);
                 break;
             case "Disapprove":
                 $array_data = [
@@ -486,6 +498,9 @@ class ApplicationController extends Controller
                     "application_status_id" => 4
                 ];
                 $form_model_holder->updateApplicationById($application_id, $array_data);
+                $app_data = $form_model_holder->getFirstUniversityFormById($application_id);
+                $notification_model_holder = new NotificationModel();
+                $notification_model_holder->sendNotificationToApplicant($app_data->created_by_id, "danger", "Your application has been disapproved", "/view-application/".$application_id);
                 break;
             case "Undo Status":
                 $application_status_id = 1;
@@ -509,8 +524,11 @@ class ApplicationController extends Controller
                     $update_array = [
                         "university_budget" => $new_budget
                     ];
-                    $university_model_holder->updateUniversityById($update_array);
+                    $university_model_holder->updateUniversityByAuthId($update_array);
                 }
+                $app_data = $form_model_holder->getFirstUniversityFormById($application_id);
+                $notification_model_holder = new NotificationModel();
+                $notification_model_holder->sendNotificationToApplicant($app_data->created_by_id, "warning", "Your application is went back to for review by admin", "/view-application/".$application_id);
                 break;
         }
         return Redirect::back();
@@ -536,8 +554,10 @@ class ApplicationController extends Controller
             $update_array = [
                 "university_budget" => $new_budget
             ];
-            $university_model_holder->updateUniversityById($update_array);
+            $university_model_holder->updateUniversityByAuthId($update_array);
         }
+        $notification_model_holder = new NotificationModel();
+        $notification_model_holder->sendNotificationToApprover($approver_id, "warning", "Admin assign you as approver for this application", "/submitted-application-view/".$application_id);
         return Redirect::back();
     }
     public function removeApprover(Request $request)
@@ -546,6 +566,10 @@ class ApplicationController extends Controller
         $application_id = $request->input("formId");
         $approver_id = $request->input("approver_id");
         $form_model_holder = new ApplicationModel();
+        $app_data = $form_model_holder->getFirstUniversityFormById($application_id);
+        $notification_model_holder = new NotificationModel();
+        $notification_model_holder->sendNotificationToApprover($app_data->approver_id, "danger", "Admin removed you as approver for this application", "/submitted-application-view/".$application_id);
+
         $array_data = [
             "approver_id" => 0,
             "application_status_id" => 1
@@ -561,8 +585,9 @@ class ApplicationController extends Controller
             $update_array = [
                 "university_budget" => $new_budget
             ];
-            $university_model_holder->updateUniversityById($update_array);
+            $university_model_holder->updateUniversityByAuthId($update_array);
         }
+
         return Redirect::back();
     }
     public function updateApplicationBreakdown(Request $request)

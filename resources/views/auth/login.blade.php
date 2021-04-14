@@ -7,12 +7,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Login - Conference Travel</title>
-    <link rel="stylesheet" type="text/css" href="css/styles.css" />
-    <link rel="icon" type="image/x-icon" href="assets/img/favicon.png">
+    <title>Forgot Password - Conference Travel</title>
+    <link rel="stylesheet" href="{{ URL::to('/css/styles.css') }}">
+    <link rel="icon" type="image/x-icon" href="{{ URL::to('/assets/img/favicon.png') }}">
     <script data-search-pseudo-elements="" defer="" src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" crossorigin="anonymous"></script>
-    <script src="/sass.js"></script>
+    <script src="{{ URL::to('/sass.js') }}"></script>
 </head>
 
 <body class="bg-primary">
@@ -27,6 +27,11 @@
                                 <div class="card-header justify-content-center"><h3 class="font-weight-light my-4">Login</h3></div>
                                 <div class="card-body">
                                     <!-- Login form-->
+                                    @if(Session::has('error'))
+                                        <div class="alert alert-danger">
+                                            {{ Session::get('error')}}
+                                        </div>
+                                    @endif
                                     <form method="POST" action="{{ route('login') }}">
                                         @csrf
                                         <!-- Form Group (email address)-->
@@ -74,9 +79,6 @@
                                             @endif
                                         </div>
                                     </form>
-                                </div>
-                                <div class="card-footer text-center">
-                                    <div class="small"><a href="{{ route('register') }}">Need an account? Sign up!</a></div>
                                 </div>
                             </div>
                         </div>

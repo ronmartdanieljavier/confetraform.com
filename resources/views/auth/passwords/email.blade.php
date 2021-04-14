@@ -8,11 +8,11 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>Forgot Password - Conference Travel</title>
-    <link rel="stylesheet" href="../css/styles.css">
-    <link rel="icon" type="image/x-icon" href="assets/img/favicon.png">
+    <link rel="stylesheet" href="{{ URL::to('/css/styles.css') }}">
+    <link rel="icon" type="image/x-icon" href="{{ URL::to('/assets/img/favicon.png') }}">
     <script data-search-pseudo-elements="" defer="" src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" crossorigin="anonymous"></script>
-    <script src="/sass.js"></script>
+    <script src="{{ URL::to('/sass.js') }}"></script>
 </head>
 
 <body class="bg-primary">
@@ -26,23 +26,33 @@
                             <div class="card shadow-lg border-0 rounded-lg mt-5">
                                 <div class="card-header justify-content-center"><h3 class="font-weight-light my-4">Password Recovery</h3></div>
                                 <div class="card-body">
+                                    @if (session('status'))
+                                        <div class="alert alert-success" role="alert">
+                                            {{ session('status') }}
+                                        </div>
+                                    @endif
                                     <div class="small mb-3 text-muted">Enter your email address and we will send you a link to reset your password.</div>
                                     <!-- Forgot password form-->
-                                    <form>
+                                    <form method="POST" action="{{ route('password.email') }}">
+                                    @csrf
                                         <!-- Form Group (email address)-->
                                         <div class="form-group">
                                             <label class="small mb-1" for="inputEmailAddress">Email</label>
-                                            <input class="form-control" id="inputEmailAddress" type="email" aria-describedby="emailHelp" placeholder="Enter email address">
+                                            <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                                            @error('email')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                            @enderror
                                         </div>
                                         <!-- Form Group (submit options)-->
                                         <div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0">
                                             <a class="small" href="{{ route('login') }}">Return to login</a>
-                                            <a class="btn btn-primary" href="auth-login-basic.html">Reset Password</a>
+                                            <button type="submit" class="btn btn-primary">
+                                                {{ __('Send Password Reset Link') }}
+                                            </button>
                                         </div>
                                     </form>
-                                </div>
-                                <div class="card-footer text-center">
-                                    <div class="small"><a href="{{ route('register') }}">Need an account? Sign up!</a></div>
                                 </div>
                             </div>
                         </div>

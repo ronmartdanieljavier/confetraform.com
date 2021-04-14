@@ -17,7 +17,7 @@ class DashboardController extends Controller
     {
         switch (Auth::user()->user_type_id) {
             case 1:
-                return $this->loadAdminDashboard();
+                return redirect("uni-admins");
                 break;
             case 2:
                 return $this->loadAdminDashboard();
@@ -36,7 +36,9 @@ class DashboardController extends Controller
         $application_breakdown_model = new ApplicationCostBreakdownModel();
         $application_model = new ApplicationModel();
         $university_model_holder = new UniversityModel();
-        $remaining_budget = $university_model_holder->getFirstUniversity()->university_budget;
+        $first_data = $university_model_holder->getFirstUniversity();
+        $remaining_budget = 0.00;
+        if($first_data) $remaining_budget = $university_model_holder->getFirstUniversity()->university_budget;
         $overall_approved_cost = $application_breakdown_model->getTotalCost();
         $remaining_budget = number_format($remaining_budget, 2, '.', ',');
         $overall_approved_cost = number_format($overall_approved_cost, 2, '.', ',');

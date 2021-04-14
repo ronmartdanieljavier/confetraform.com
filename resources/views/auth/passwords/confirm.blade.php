@@ -1,6 +1,22 @@
-@extends('layouts.app')
+<html lang="en">
+<head>
+    <script type="text/javascript" async="" src="https://www.google-analytics.com/analytics.js"></script>
+    <script id="ga-gtag" type="text/javascript" async="" src="https://www.googletagmanager.com/gtag/js?id=UA-38417733-31"></script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Forgot Password - Conference Travel</title>
+    <link rel="stylesheet" href="{{ URL::to('/css/styles.css') }}">
+    <link rel="icon" type="image/x-icon" href="{{ URL::to('/assets/img/favicon.png') }}">
+    <script data-search-pseudo-elements="" defer="" src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" crossorigin="anonymous"></script>
+    <script src="{{ URL::to('/sass.js') }}"></script>
+</head>
 
-@section('content')
+<body class="bg-primary">
+
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -20,7 +36,7 @@
                                 <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
 
                                 @error('password')
-                                    <span class="invalid-feedback" role="alert">
+                                <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
@@ -46,4 +62,6 @@
         </div>
     </div>
 </div>
-@endsection
+
+</body></html>
+

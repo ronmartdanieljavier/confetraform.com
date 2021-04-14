@@ -22,9 +22,7 @@ class UserSeeder extends Seeder
             'state' => "NSW",
             'post_code' => "2115",
             'country' => "AU",
-            'user_type_id' => "2",
-            'course_id' => "1",
-            'university_id' => "1",
+            'user_type_id' => "1",
             'email' => 'ronmartdanieljavier@gmail.com',
             'password' => Hash::make('passwordRon'),
             'email_verified_at' => now(),
@@ -41,9 +39,8 @@ class UserSeeder extends Seeder
             'state' => "NSW",
             'post_code' => "2115",
             'country' => "AU",
-            'user_type_id' => "2", //uni admin
-            'course_id' => "1",
             'university_id' => "1",
+            'user_type_id' => "2", //uni admin
             'email' => 'aline.prdg@gmail.com',
             'password' => Hash::make('password'),
             'email_verified_at' => now(),
