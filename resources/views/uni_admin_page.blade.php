@@ -172,8 +172,7 @@
                             $('#error-div').hide();
                             if (response) {
                                 $('#success-message').text(response.success);
-                                $("#contact-form")[0].reset();
-                                location.reload();
+                                window.location.reload(false);
                             }
                         },
                         error: function(response) {
