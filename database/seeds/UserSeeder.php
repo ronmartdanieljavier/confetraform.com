@@ -63,6 +63,42 @@ class UserSeeder extends Seeder
             'password' => Hash::make('password'),
             'email_verified_at' => now(),
         ]);
+        DB::table('users')->insert([
+            'first_name' => "Jonah",
+            'last_name' => "Lorenzo",
+            'date_of_birth' => "1991/06/22",
+            'student_number' => "s4634359",
+            'contact_number' => "0484265301",
+            'street' => "11 Eccles Street",
+            'suburb' => "Ermington",
+            'state' => "NSW",
+            'post_code' => "2115",
+            'country' => "AU",
+            'user_type_id' => "4", // approver
+            'course_id' => "2",
+            'university_id' => "1",
+            'email' => 'thesis_applicant@rmdj.info',
+            'password' => Hash::make('password'),
+            'email_verified_at' => now(),
+        ]);
+        DB::table('users')->insert([
+            'first_name' => "Guia Vega",
+            'last_name' => "Sagrado",
+            'date_of_birth' => "1991/06/22",
+            'student_number' => "s4634359",
+            'contact_number' => "0484265301",
+            'street' => "11 Eccles Street",
+            'suburb' => "Ermington",
+            'state' => "NSW",
+            'post_code' => "2115",
+            'country' => "AU",
+            'user_type_id' => "4", // approver
+            'course_id' => "3",
+            'university_id' => "1",
+            'email' => 'thesis_applicant2@rmdj.info',
+            'password' => Hash::make('password'),
+            'email_verified_at' => now(),
+        ]);
 
 
         DB::table('department')->insert([

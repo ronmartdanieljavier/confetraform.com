@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Model\CourseModel;
+use App\Model\DepartmentModel;
 use App\Model\NotificationModel;
 use App\Model\UniversityModel;
 use App\User;
@@ -123,6 +124,28 @@ class SystemAdminController extends Controller
                 "course_list" => $course_list,
             ];
             return view('course_setting_page', $return_data);
+        } else {
+            return redirect("home");
+        }
+
+    }
+    public function loadDepartmentSettingPage()
+    {
+        if(Auth::user()->user_type_id == 2) {
+
+            $department_model_holder = new DepartmentModel();
+            $department_data_holder = $department_model_holder->loadDepartment();
+            $department_list = [];
+            foreach ($department_data_holder as $department_data) {
+                $department_list[] = [
+                    "department_id" => $department_data->department_id,
+                    "department_name" => $department_data->department_name
+                ];
+            }
+            $return_data = [
+                "department_list" => $department_list,
+            ];
+            return view('department_setting_page', $return_data);
         } else {
             return redirect("home");
         }
@@ -309,5 +332,33 @@ class SystemAdminController extends Controller
         }
 
         return response()->json(["list" => $list,"total_unread"=>$total_unread], 200);
+    }
+
+    public function addDepartment(Request $request)
+    {
+        $request->validate([
+            'department_name'        => 'required|unique:department',
+        ]);
+
+        $course_model_holder = new DepartmentModel();
+        $update_array = [
+            "department_name" => $request->input("department_name"),
+        ];
+        $course_model_holder->createDepartment($update_array);
+
+        return Redirect::back();
+    }
+    public function updateDepartment(Request $request)
+    {
+        $request->validate([
+            'department_name'        => 'required'
+        ]);
+
+        $course_model_holder = new DepartmentModel();
+        $update_array = [
+            "department_name" => $request->input("department_name")
+        ];
+        $course_model_holder->updateDepartmentById($request->input("department_id"),$update_array);
+        return Redirect::back();
     }
 }

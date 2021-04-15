@@ -55,6 +55,9 @@ Route::post('/add-course', "SystemAdminController@addCourse")->middleware('auth'
 Route::post('/edit-course', "SystemAdminController@updateCourse")->middleware('auth','verified','checkstatus','uni.admin');
 Route::get('/deactivate-course/{id}', "SystemAdminController@deactivateCourse")->middleware('auth','verified','checkstatus','uni.admin');
 Route::get('/activate-course/{id}', "SystemAdminController@activateCourse")->middleware('auth','verified','checkstatus','uni.admin');
+Route::get('/department-settings', "SystemAdminController@loadDepartmentSettingPage")->middleware('auth','verified','checkstatus','uni.admin');
+Route::post('/add-department', "SystemAdminController@addDepartment")->middleware('auth','verified','checkstatus','uni.admin');
+Route::post('/edit-department', "SystemAdminController@updateDepartment")->middleware('auth','verified','checkstatus','uni.admin');
 
 
 //Sys Admin & UniAdmin (middleware access: sys.uni.admin)

@@ -130,6 +130,11 @@
                         <i class="fas fa-fw fa-cog"></i>
                         <span>Course Settings</span></a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{!! URL::to('/department-settings') !!}">
+                        <i class="fas fa-fw fa-cog"></i>
+                        <span>Department Settings</span></a>
+                </li>
         @endif
         @if(auth()->user()->user_type_id == "1")
                 <li class="nav-item">

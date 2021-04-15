@@ -20,4 +20,12 @@ class DepartmentModel extends Model
             )
             ->get();
     }
+    public function createDepartment($array_data)
+    {
+        return $this->insertGetId($array_data);
+    }
+    public function updateDepartmentById($id,$update_array)
+    {
+        return $this->where("id", $id)->update($update_array);
+    }
 }
