@@ -54,11 +54,11 @@
                                     </a>
                                     @if($row_data['status'])
                                         <a href="{{ URL::to("/deactivate-course/".$row_data['course_id']) }}" class="btn btn-danger btn-sm">
-                                            <span class="text">Inactive</span>
+                                            <span class="text">Deactivate</span>
                                         </a>
                                     @else
                                         <a href="{{ URL::to("/activate-course/".$row_data['course_id']) }}" class="btn btn-success btn-sm">
-                                            <span class="text">Active</span>
+                                            <span class="text">Activate</span>
                                         </a>
                                     @endif
                                 </td>
