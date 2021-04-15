@@ -43,7 +43,6 @@ Route::post('/save-form-section-detail', "FormController@saveFormDetail")->middl
 Route::post('/delete-form-detail/{id}', "FormController@deleteFormDetail")->middleware('auth','verified','checkstatus','uni.admin');
 Route::post('/save-form-section', "FormController@saveFormSection")->middleware('auth','verified','checkstatus','uni.admin');
 Route::post('/delete-form-section', "FormController@deleteFormSection")->middleware('auth','verified','checkstatus','uni.admin');
-Route::post('/delete-application/{id}', "ApplicationController@deleteApplication")->middleware('auth','verified','checkstatus','uni.admin');
 Route::post('/save-approver', "ApplicationController@saveApprover")->middleware('auth','verified','checkstatus','uni.admin');
 Route::post('/remove-approver', "ApplicationController@removeApprover")->middleware('auth','verified','checkstatus','uni.admin');
 Route::post('/send-approver-invitation', "RegisterController@inviteApprover")->middleware('auth','verified','checkstatus','uni.admin');
@@ -79,6 +78,7 @@ Route::get('/apply-form/{id}', "ApplicationController@loadFormById")->middleware
 Route::post('/submit-application', "ApplicationController@submitApplication")->middleware('auth','verified','checkstatus','applicant');
 Route::get('/your-application', "ApplicationController@loadUserApplication")->middleware('auth','verified','checkstatus','applicant');
 Route::get('/view-application/{id}', "ApplicationController@viewUserApplication")->middleware('auth','verified','checkstatus','applicant');
+Route::post('/delete-application/{id}', "ApplicationController@deleteApplication")->middleware('auth','verified','checkstatus','applicant');
 
 
 
@@ -88,3 +88,4 @@ Route::get('/userprofile', "UserProfileController@loadUserProfilePage")->middlew
 Route::post('/save-profile', "UserProfileController@saveProfile")->middleware('auth','verified','checkstatus');
 Route::post('/save-user', "UserProfileController@saveUser")->middleware('auth','verified','checkstatus');
 Route::get('/load-notification', "SystemAdminController@loadNotification")->middleware('auth','verified','checkstatus');
+Route::get('/download/{id}', "SystemAdminController@download")->middleware('auth','verified','checkstatus');

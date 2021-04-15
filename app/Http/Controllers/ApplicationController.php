@@ -14,7 +14,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
 
 class ApplicationController extends Controller
 {
@@ -79,7 +81,7 @@ class ApplicationController extends Controller
     {
         $form_id = $request->input("form_id");
         $breakdown_count = $request->input("breakdownCount");
-
+//        dd($request->all());
         $form_model_holder = new FormTemplateModel();
         $application_model_holder = new ApplicationModel();
         $application_section_model = new ApplicationSectionModel();
@@ -122,7 +124,22 @@ class ApplicationController extends Controller
                     $field_type = $row_data['field_type'];
                     $field_value = $request->input($field_name);
                     $field_order = $row_data['field_order'];
-
+                    if($field_type == "FILE") {
+                        try {
+                            $folder_name  = Auth::user()->id."_".$application_id."_".rand(1,1000);
+                            $file_path = "";
+                            if ($request->hasFile($field_name)) {
+                                $file_name = $field_name."".".".$request->file($field_name)->extension();
+                                $file_path = $request->file($field_name)->storeAs($folder_name, $file_name);
+                            }
+                            $field_value = $file_path;
+//                            $attachment_file = [];
+//                            $filesInFolder = Storage::disk("local")->files($clean_child_name);
+//                            foreach($filesInFolder as $file_path) $attachment_file[] = storage_path("app/".$file_path);
+                        } catch (\Exception $exception) {
+                            dd("Error! Please submit your document to admin@tregearpreschool.com");
+                        }
+                    }
                     $insert_array = [
                         "application_section_id" => $section_id,
                         "field_name" => $field_name,

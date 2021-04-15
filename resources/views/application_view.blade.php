@@ -16,7 +16,7 @@
         </div>
     @endif
     <div>
-        <form method="POST" action="{{ URL('submit-application') }}">
+        <form method="POST" action="{{ URL('submit-application') }}" enctype="multipart/form-data">
             @csrf
             <input type="hidden" name="form_id" value="{{ $form_id }}">
             <div class="card mb-4">

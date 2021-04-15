@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Model\ApplicationDetailModel;
 use App\Model\CourseModel;
 use App\Model\DepartmentModel;
 use App\Model\NotificationModel;
@@ -11,6 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
 
 class SystemAdminController extends Controller
 {
@@ -360,5 +362,11 @@ class SystemAdminController extends Controller
         ];
         $course_model_holder->updateDepartmentById($request->input("department_id"),$update_array);
         return Redirect::back();
+    }
+    public function download($id)
+    {
+        $application_detail_model = new ApplicationDetailModel();
+        $data_holder = $application_detail_model->loadDetailById($id);
+        return Storage::download($data_holder->field_value);
     }
 }

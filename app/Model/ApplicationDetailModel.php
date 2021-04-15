@@ -10,6 +10,10 @@ class ApplicationDetailModel extends Model
 {
     protected $table = "applications_details";
 
+    public function loadDetailById($id)
+    {
+        return $this->where("id", $id)->first();
+    }
     public function createApplicationDetail($array_data)
     {
         return $this->insertGetId($array_data);
