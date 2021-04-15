@@ -199,7 +199,9 @@
                                                 {{ $field_section_detail_list["field_value"] }}
                                                 @break
                                                 @case("FILE")
-                                                {{ $field_section_detail_list["field_value"] }}
+                                                <a href="{{ URL::to('/download/'.$field_section_detail_list["form_detail_id"]) }}">
+                                                    {{ $field_section_detail_list["field_label"] }}
+                                                </a>
                                                 @break
                                                 @default
                                                 <label for="{{ $field_section_detail_list["field_name"] }}" class="form-label"><strong>{{ $field_section_detail_list["field_label"] }}: </strong></label>
