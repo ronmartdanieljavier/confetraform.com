@@ -382,7 +382,7 @@ class ApplicationController extends Controller
                 $form_detail_data = $form_model_holder->getFormDetails($form_id);
                 $form_detail_list = [];
                 if(Auth::user()->user_type_id == 3) {
-                    if($approver_id !== Auth::user()->id) {
+                    if($approver_id != Auth::user()->id) {
                         return redirect("/submitted-application-list");
                     }
                 }
